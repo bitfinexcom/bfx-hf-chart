@@ -480,7 +480,7 @@ export default class Chart extends React.Component {
                 key={i}
                 style={{
                   borderColor: `${settings.colors[0]}99`,
-                  bottom: settings.bottom,
+                  bottom: `${settings.bottom}px`,
                   left: 32,
                 }}
               >

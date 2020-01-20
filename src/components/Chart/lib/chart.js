@@ -135,7 +135,9 @@ export default class BitfinexTradingChart {
     this.updateData(this.data)
 
     const ohlcHeight = this.getOHLCVPHeight()
-    const slotHeight = (this.vp.size.h - ohlcHeight) / this.externalIndicators
+    const slotHeight = this.externalIndicators === 0
+      ? 0
+      : (this.vp.size.h - ohlcHeight) / this.externalIndicators
 
     if (this.onUpdateIndicatorSettingsCB) {
       this.onUpdateIndicatorSettingsCB(indicators, slotHeight)
