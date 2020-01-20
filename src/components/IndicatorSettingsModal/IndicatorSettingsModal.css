@@ -1,0 +1,71 @@
+.bfxc__indicatorsettingsmodal-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: vertical;
+  justify-content: center;
+  align-items: center;
+}
+
+.bfxc__indicatorsettingsmodal-wrapper {
+  background: #111;
+  border: 1px solid #333;
+  padding: 8px;
+  min-width: 200px;
+}
+
+.bfxc__indicatorsettingsmodal-title {
+  font-size: 12px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px !important;
+  margin-bottom: 16px !important;
+}
+
+.bfxc__indicatorsettingsmodal-color {
+  width: 12px;
+  height: 12px;
+  background: red;
+  float: right;
+  border: 1px solid #333;
+  box-shadow: 0 0 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+.bfxc__indicatorsettingsmodal-settings li {
+  margin-bottom: 8px;
+}
+
+.bfxc__indicatorsettingsmodal-settings li > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bfxc__indicatorsettingsmodal-settings li > p {
+  margin-right: 16px;
+  font-size: 12px;
+  width: 100px;
+}
+
+.bfxc__indicatorsettingsmodal-settings li > input {
+  background: transparent;
+  border: 1px solid #333;
+  font-size: 12px;
+  color: #fff;
+  padding: 4px 8px;
+}
+
+.bfxc__indicatorsettingsmodal-actions {
+  margin-top: 16px;
+}
+
+.bfxc__indicatorsettingsmodal-actions li {
+  float: right;
+  margin-left: 8px;
+  font-size: 12px;
+}

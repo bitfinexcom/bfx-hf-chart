@@ -1,0 +1,52 @@
+.loader-wrapper {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+.loader-bee {
+  position:absolute;
+  margin: auto;
+  height:60px;
+  width:60px;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+svg.loader-bee {
+  animation: spin 1.5s infinite linear;
+  -webkit-animation: spin 1.5s infinite linear;
+  -moz-animation: spin 1.5s infinite linear;
+}
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+  }
+}
+@-moz-keyframes infinite-spinning {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+.bee-icon, .circle {
+  fill: #ffffff; 
+}
