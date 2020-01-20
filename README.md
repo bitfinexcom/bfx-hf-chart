@@ -2,15 +2,56 @@
 
 [![Build Status](https://travis-ci.org/bitfinexcom/bfx-hf-chart.svg?branch=master)](https://travis-ci.org/bitfinexcom/bfx-hf-chart)
 
-TODO
+This is the official Bitfinex financial charting library, released as part of the Honey Framework. It renders entirely on HTML5 canvas elements, and supports all Honey Framework trading indicators.
 
 ### Features
+* 100% canvas rendering
+* 100% Honey Framework indicator coverage
+* High-performance with large datasets
+* React wrapper component
+* Fully customizable
 
 ### Installation
 
+```bash
+npm i --save bfx-hf-chart
+```
+
 ### Quickstart & Example
 
-### Docs
+To get started, utilize the React component to render & pass data to the chart:
+
+```js
+import React from 'react'
+import BFXChart from '../dist/components/Chart/Chart'
+
+const DATA = [....]
+
+export default class Demo extends React.PureComponent {
+  render () {
+    return (
+      <BFXChart
+        candles={DATA}
+        candleWidth='1m'
+        width={800}
+        height={600}
+      />
+    )
+  }
+}
+```
+
+Note that candle data is expected in Bitfinex array format, specifically:
+```js
+const data = [[
+  mts,
+  open,
+  close,
+  high,
+  low,
+  volume,
+], ...]
+```
 
 ### Contributing
 
