@@ -65,7 +65,7 @@ p.bfxcs__topbar-market {
 
 .bfxcs__topbar-ohlc-entry {
   margin-right: 16px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .bfxcs__topbar-ohlc-entry p:first-child {
@@ -79,7 +79,7 @@ p.bfxcs__topbar-market {
 
 .bfxcs__topbar-tfs p {
   margin: 0 8px;
-  font-size: 11px;
+  font-size: 13px;
   color: #6b7b8b;
 }
 
@@ -104,7 +104,7 @@ p.bfxcs__topbar-market {
 }
 
 .bfxc__topbar-indicators .bfxc__dropdown-wrapper > p:first-child {
-  font-size: 11px;
+  font-size: 13px;
   color: #6b7b8b;
   padding-left: 8px;
 }
@@ -159,7 +159,7 @@ p.bfxcs__topbar-market {
   vertical-align: top;
   margin: 0 8px;
 
-  font-size: 11px;
+  font-size: 13px;
   color: #6b7b8b;
 }
 
