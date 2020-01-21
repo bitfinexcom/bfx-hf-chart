@@ -2,6 +2,7 @@
 - fix: topbar fullscreen icon margin with no indicators dropdown
 - fix: LoadingBeeSpinner react attr naming
 - fix: crosshair rendering with no candles in view
+- fix: use CONFIG map for settings, don't extract
 - feature: allow disabling indicator dropdown
 
 # 1.0.0
