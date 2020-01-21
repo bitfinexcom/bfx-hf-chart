@@ -330,7 +330,7 @@ export default class Chart extends React.Component {
     const {
       marketLabel, bgColor = '#000', candleWidth, candles, onTimeFrameChange,
       onAddDrawing, isSyncing, disableToolbar, disableTopbar, onDeleteIndicator,
-      disableIndicators,
+      disableIndicators, candleLoadingThreshold = 0
     } = this.props
 
     const height = isFullscreen ? window.innerHeight : this.props.height
@@ -475,7 +475,7 @@ export default class Chart extends React.Component {
           style={canvasStyle}
         />
 
-        {candles.length > 0 && indicatorSettings.length > 0 && (
+        {candles.length > candleLoadingThreshold && indicatorSettings.length > 0 && (
           <ul className='bfxc__overlaysettings-wrapper'>
             {indicatorSettings.map((settings, i) => (
               <li
@@ -514,7 +514,7 @@ export default class Chart extends React.Component {
           />
         )}
 
-        {candles.length === 0 && (
+        {candles.length <= candleLoadingThreshold && (
           <LoadingBeeSpinner top={this.getTopReservedSpace()} />
         )}
       </div>

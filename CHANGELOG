@@ -6,6 +6,7 @@
 - fix: use correct width for X axis line rendering
 - feature: allow disabling indicator dropdown
 - refactor: increase font sizes in top/toolbars
+- refactor: extract loading spinner render threshold for small datasets
 
 # 1.0.0
 - initial release
