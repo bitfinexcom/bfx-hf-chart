@@ -1,0 +1,8 @@
+# 1.0.1
+- fix: topbar fullscreen icon margin with no indicators dropdown
+- fix: LoadingBeeSpinner react attr naming
+- fix: crosshair rendering with no candles in view
+- feature: allow disabling indicator dropdown
+
+# 1.0.0
+- initial release
