@@ -92,7 +92,6 @@ p.bfxcs__topbar-market {
 }
 
 .bfxc__topbar-indicators {
-  margin-right: 8px;
   padding-right: 8px;
 }
 
@@ -204,6 +203,10 @@ p.bfxcs__topbar-market {
 
 .bfxc__overlaysettings-wrapper li > i:hover {
   color: #fff;
+}
+
+.bfxcs__topbar-fullscreen {
+  margin-left: 8px;
 }
 
 .bfxcs__topbar-fullscreen i:hover {
