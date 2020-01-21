@@ -4,6 +4,7 @@
   "description": "HF Financial Charting Library",
   "main": "dist/components/Chart/Chart.js",
   "author": "Bitfinex",
+  "homepage": "http://f3rno.github.io/bfx-hf-chart/",
   "contributors": [
     "Cris Mihalache <cris.m@bitfinex.com> (https://www.bitfinex.com)"
   ],
@@ -17,6 +18,7 @@
     "bfx-hf-indicators": "^2.0.3",
     "bfx-hf-util": "^1.0.5",
     "classnames": "^2.2.6",
+    "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mouse-wheel": "^1.2.0",
@@ -28,6 +30,9 @@
     "react-scripts": "3.3.0"
   },
   "scripts": {
+    "cra-build": "react-scripts build",
+    "pre-deploy": "npm run cra-build",
+    "deploy-gh-pages": "gh-pages -d build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
