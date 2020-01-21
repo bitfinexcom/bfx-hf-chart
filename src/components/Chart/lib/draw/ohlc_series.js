@@ -3,13 +3,6 @@ import _max from 'lodash/max'
 import _min from 'lodash/min'
 import CONFIG from '../config'
 
-const { 
-  RISING_CANDLE_FILL,
-  RISING_VOL_FILL,
-  FALLING_CANDLE_FILL,
-  FALLING_VOL_FILL,
-} = CONFIG
-
 /**
  * Renders a series of candles on the target 2D context, using the specified
  * viewport dimensions (scaled appropriately)
@@ -42,8 +35,8 @@ export default (ctx, candles, candleWidth, targetWidth, targetHeight, vpWidth) =
 
     // volume
     ctx.fillStyle = c >= o
-      ? RISING_VOL_FILL
-      : FALLING_VOL_FILL
+      ? CONFIG.RISING_VOL_FILL
+      : CONFIG.FALLING_VOL_FILL
 
     ctx.fillRect(
       x - (candleWidth / 2),
@@ -52,7 +45,7 @@ export default (ctx, candles, candleWidth, targetWidth, targetHeight, vpWidth) =
       -((v / maxVol) * targetHeight)
     )
 
-    ctx.fillStyle = c >= o ? RISING_CANDLE_FILL : FALLING_CANDLE_FILL
+    ctx.fillStyle = c >= o ? CONFIG.RISING_CANDLE_FILL : CONFIG.FALLING_CANDLE_FILL
     ctx.strokeStyle = ctx.fillStyle
 
     // body

@@ -4,7 +4,6 @@ import _isObject from 'lodash/isObject'
 import _last from 'lodash/last'
 import _max from 'lodash/max'
 import _min from 'lodash/min'
-import randomColor from 'randomcolor'
 import { Candle } from 'bfx-api-node-models'
 import { TIME_FRAME_WIDTHS } from 'bfx-hf-util'
 import mouseWheelListener from 'mouse-wheel'
@@ -18,21 +17,6 @@ import drawXAxis from './draw/x_axis'
 import drawYAxis from './draw/y_axis'
 
 import CONFIG, { set as setConfig } from './config'
-
-const {
-  CROSSHAIR_COLOR,
-  AXIS_COLOR,
-  AXIS_MARGIN_BOTTOM,
-  MARGIN_BOTTOM,
-  MARGIN_RIGHT,
-  TRADE_MARKER_BUY_COLOR,
-  TRADE_MARKER_SELL_COLOR,
-  TRADE_MARKER_RADIUS_PX,
-  RISING_CANDLE_FILL,
-  FALLING_CANDLE_FILL,
-  ZOOM_CANDLE_STEP,
-  ZOOM_MIN_LIMIT_CANDLES,
-} = CONFIG
 
 export default class BitfinexTradingChart {
   constructor ({
@@ -82,7 +66,7 @@ export default class BitfinexTradingChart {
     this.vp = {
       pan: { x: 0, y: 0 },
       origin: { x: 0, y: 0 },
-      size: { w: width - MARGIN_RIGHT - 0.5, h: height - MARGIN_BOTTOM - AXIS_MARGIN_BOTTOM - 0.5 }
+      size: { w: width - CONFIG.MARGIN_RIGHT - 0.5, h: height - CONFIG.MARGIN_BOTTOM - CONFIG.AXIS_MARGIN_BOTTOM - 0.5 }
     }
 
     this.onMouseUp = this.onMouseUp.bind(this)
@@ -235,8 +219,8 @@ export default class BitfinexTradingChart {
   updateDimensions (width, height) {
     this.width = width
     this.height = height
-    this.vp.size.w = width - MARGIN_RIGHT - 0.5
-    this.vp.size.h = height - MARGIN_BOTTOM - AXIS_MARGIN_BOTTOM - 0.5
+    this.vp.size.w = width - CONFIG.MARGIN_RIGHT - 0.5
+    this.vp.size.h = height - CONFIG.MARGIN_BOTTOM - CONFIG.AXIS_MARGIN_BOTTOM - 0.5
 
     this.clipCanvases()
     this.clearAll()
@@ -381,7 +365,7 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
-    const slotY = vpHeight + (slotHeight * exSlot) + AXIS_MARGIN_BOTTOM
+    const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
     const transformer = dataTransformer(data, vWidth, rightMTS)
@@ -406,7 +390,7 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
-    const slotY = vpHeight + (slotHeight * exSlot) + AXIS_MARGIN_BOTTOM
+    const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
     const lineKeys = ['macd', 'signal']
@@ -458,7 +442,7 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
-    const slotY = vpHeight + (slotHeight * exSlot) + AXIS_MARGIN_BOTTOM
+    const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
     const transformer = dataTransformer(data, vWidth, rightMTS)
@@ -483,7 +467,7 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
-    const slotY = vpHeight + (slotHeight * exSlot) + AXIS_MARGIN_BOTTOM
+    const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
 
@@ -511,14 +495,14 @@ export default class BitfinexTradingChart {
   renderExternalSlotMeta (transformer, label, xAxes, exSlot) {
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
-    const slotY = vpHeight + (slotHeight * exSlot) + AXIS_MARGIN_BOTTOM
+    const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
     const ctx = this.indicatorCanvas.getContext('2d')
 
     for (let i = 0; i < xAxes.length; i += 1) {
       const axis = xAxes[i]
       const axisY = transformer.y(axis, slotHeight)
 
-      this.drawHorizontalVPLine(this.indicatorCanvas, AXIS_COLOR, slotY + slotHeight - axisY)
+      this.drawHorizontalVPLine(this.indicatorCanvas, CONFIG.AXIS_COLOR, slotY + slotHeight - axisY)
 
       ctx.fillStyle = '#fff'
       ctx.textAlign = 'left'
@@ -582,12 +566,12 @@ export default class BitfinexTradingChart {
   renderCrosshair () {
     const { width, height, mousePosition } = this
 
-    drawLine(this.crosshairCanvas, CROSSHAIR_COLOR, [
+    drawLine(this.crosshairCanvas, CONFIG.CROSSHAIR_COLOR, [
       { x: 0, y: mousePosition.y + 0.5 },
       { x: width, y: mousePosition.y + 0.5 },
     ])
 
-    drawLine(this.crosshairCanvas, CROSSHAIR_COLOR, [
+    drawLine(this.crosshairCanvas, CONFIG.CROSSHAIR_COLOR, [
       { x: mousePosition.x + 0.5, y: 0 },
       { x: mousePosition.x + 0.5, y: height },
     ])
@@ -664,11 +648,11 @@ export default class BitfinexTradingChart {
     const transformer = this.getOHLCTransformer()
 
     visibleOrders.forEach(o => {
-      const color = o.amount < 0 ? FALLING_CANDLE_FILL : RISING_CANDLE_FILL
+      const color = o.amount < 0 ? CONFIG.FALLING_CANDLE_FILL : CONFIG.RISING_CANDLE_FILL
       const label = `${formatAxisTick(o.amount)} @ ${formatAxisTick(o.price)}`
       const labelWidth = ctx.measureText(label).width
       const y = transformer.y(o.price)
-      const labelX = this.vp.size.w - (MARGIN_RIGHT * 0.5) - labelWidth
+      const labelX = this.vp.size.w - (CONFIG.MARGIN_RIGHT * 0.5) - labelWidth
 
       drawLine(this.drawingCanvas, color, [{
         x: 0,
@@ -703,11 +687,11 @@ export default class BitfinexTradingChart {
 
     const ctx = this.drawingCanvas.getContext('2d')
     const transformer = this.getOHLCTransformer()
-    const color = amount < 0 ? FALLING_CANDLE_FILL : RISING_CANDLE_FILL
+    const color = amount < 0 ? CONFIG.FALLING_CANDLE_FILL : CONFIG.RISING_CANDLE_FILL
     const label = `${formatAxisTick(amount)} @ ${formatAxisTick(basePrice)}`
     const labelWidth = ctx.measureText(label).width
     const y = transformer.y(basePrice)
-    const labelX = this.vp.size.w - (MARGIN_RIGHT * 0.5) - labelWidth
+    const labelX = this.vp.size.w - (CONFIG.MARGIN_RIGHT * 0.5) - labelWidth
 
     drawLine(this.drawingCanvas, color, [{
       x: 0,
@@ -809,14 +793,14 @@ export default class BitfinexTradingChart {
 
     for (let i = 0; i < this.trades.length; i += 1) {
       ctx.strokeStyle = this.trades[i].amount > 0
-        ? TRADE_MARKER_BUY_COLOR
-        : TRADE_MARKER_SELL_COLOR
+        ? CONFIG.TRADE_MARKER_BUY_COLOR
+        : CONFIG.TRADE_MARKER_SELL_COLOR
 
       ctx.beginPath()
       ctx.arc(
         transformer.x(this.trades[i].mts),
         transformer.y(this.trades[i].price),
-        TRADE_MARKER_RADIUS_PX,
+        CONFIG.TRADE_MARKER_RADIUS_PX,
         0,
         2 * Math.PI
       )
@@ -908,12 +892,12 @@ export default class BitfinexTradingChart {
 
   onMouseWheel (dx, dy, dz, ev) {
     // differing values in Chrome/FF, normalize
-    const delta = dy < 0 ? -ZOOM_CANDLE_STEP : ZOOM_CANDLE_STEP
+    const delta = dy < 0 ? -CONFIG.ZOOM_CANDLE_STEP : CONFIG.ZOOM_CANDLE_STEP
 
     this.viewportWidthCandles += delta
 
-    if (this.viewportWidthCandles < ZOOM_MIN_LIMIT_CANDLES) {
-      this.viewportWidthCandles = ZOOM_MIN_LIMIT_CANDLES
+    if (this.viewportWidthCandles < CONFIG.ZOOM_MIN_LIMIT_CANDLES) {
+      this.viewportWidthCandles = CONFIG.ZOOM_MIN_LIMIT_CANDLES
     }
 
     this.candleWidthPX = Math.max(1, 7 - Math.floor(this.viewportWidthCandles / 50))
