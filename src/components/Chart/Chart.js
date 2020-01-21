@@ -329,8 +329,8 @@ export default class Chart extends React.Component {
 
     const {
       marketLabel, bgColor = '#000', candleWidth, candles, onTimeFrameChange,
-      onAddIndicator, onAddDrawing, isSyncing, disableToolbar, disableTopbar,
-      onDeleteIndicator,
+      onAddDrawing, isSyncing, disableToolbar, disableTopbar, onDeleteIndicator,
+      disableIndicators,
     } = this.props
 
     const height = isFullscreen ? window.innerHeight : this.props.height
@@ -397,26 +397,28 @@ export default class Chart extends React.Component {
               ))}
             </div>
 
-            <div className='bfxc__topbar-indicators bfxcs__topbar-section'>
-              <Dropdown
-                label={(
-                  <p>
-                    <i className='icon-indicators' />
-                    Indicators
-                    <i className='icon-chevron-down-passive' />
-                  </p>
-                )}
-              >
-                <ul>
-                  {Object.values(HFI).filter(i => !!i.label).map(i => (
-                    <li
-                      key={i.id}
-                      onClick={() => this.onAddIndicator(i)}
-                    >{i.humanLabel}</li>
-                  ))}
-                </ul>
-              </Dropdown>
-            </div>
+            {!disableIndicators && (
+              <div className='bfxc__topbar-indicators bfxcs__topbar-section'>
+                <Dropdown
+                  label={(
+                    <p>
+                      <i className='icon-indicators' />
+                      Indicators
+                      <i className='icon-chevron-down-passive' />
+                    </p>
+                  )}
+                >
+                  <ul>
+                    {Object.values(HFI).filter(i => !!i.label).map(i => (
+                      <li
+                        key={i.id}
+                        onClick={() => this.onAddIndicator(i)}
+                      >{i.humanLabel}</li>
+                    ))}
+                  </ul>
+                </Dropdown>
+              </div>
+            )}
 
             <div className='bfxcs__topbar-fullscreen'>
               <i
