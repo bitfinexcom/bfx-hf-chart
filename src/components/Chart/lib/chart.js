@@ -580,10 +580,6 @@ export default class BitfinexTradingChart {
    * Renders the crosshair and updates the toolbar OHLC stats
    */
   renderCrosshair () {
-    if (this.data.length < 2) {
-      return
-    }
-
     const { width, height, mousePosition } = this
 
     drawLine(this.crosshairCanvas, CROSSHAIR_COLOR, [
@@ -598,6 +594,11 @@ export default class BitfinexTradingChart {
 
     const ctx = this.crosshairCanvas.getContext('2d')
     const candlesInView = this.getCandlesInView()
+
+    if (candlesInView.length === 0) {
+      return
+    }
+
     const maxP = _max(candlesInView.map(ohlc => ohlc[3]))
     const minP = _min(candlesInView.map(ohlc => ohlc[4]))
     const rightMTS = _last(candlesInView)[0]
