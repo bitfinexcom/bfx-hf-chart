@@ -5,6 +5,7 @@
 - fix: use CONFIG map for settings, don't extract
 - fix: use correct width for X axis line rendering
 - feature: allow disabling indicator dropdown
+- refactor: increase font sizes in top/toolbars
 
 # 1.0.0
 - initial release
