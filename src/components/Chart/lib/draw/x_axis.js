@@ -12,7 +12,7 @@ import CONFIG from '../config'
  * @param {HTML5Canvas} canvas - target canvas to render on
  * @param {Array[]} candles - candle set in bitfinex format
  * @param {number} y - y position of x axis in px
- * @param {number} width - width of x axis in px
+ * @param {number} width - width of x axis in ms (time)
  * @param {number} vpWidth - total viewport width in px
  */
 export default (canvas, candles, y, width, vpWidth) => {
@@ -25,7 +25,7 @@ export default (canvas, candles, y, width, vpWidth) => {
   // axis line
   drawLine(canvas, CONFIG.AXIS_COLOR, [
     { x: 0, y },
-    { x: width, y }
+    { x: vpWidth, y }
   ])
 
   // resolve tick width depending on domain
