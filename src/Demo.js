@@ -2,6 +2,7 @@ import React from 'react'
 import HFI from 'bfx-hf-indicators'
 import Chart from './components/Chart'
 import MockCandleData from './btc_candle_data.json'
+import './Demo.css'
 
 MockCandleData.sort((a, b) => a[0] - b[0])
 
@@ -49,8 +50,9 @@ export default class Demo extends React.PureComponent {
           marketLabel='BTC/USD'
           candles={MockCandleData}
           candleWidth='1m'
-          width={1600}
-          height={900}
+          width={window.innerWidth}
+          height={window.innerHeight}
+          disableToolbar
 
           onAddIndicator={this.onAddIndicator}
           onAddDrawing={this.onAddDrawing}

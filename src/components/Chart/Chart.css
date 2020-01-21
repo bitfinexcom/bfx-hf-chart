@@ -168,6 +168,10 @@ p.bfxcs__topbar-market {
   color: #fff;
 }
 
+.bfxc__overlaysettings-wrapper {
+  float: left;
+}
+
 .bfxc__overlaysettings-wrapper li {
   position: absolute;
   font-size: 11px;
