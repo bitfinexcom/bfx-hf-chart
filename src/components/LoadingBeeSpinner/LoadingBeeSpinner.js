@@ -17,8 +17,8 @@ export default class LoadingBeeSpinner extends React.PureComponent {
             x='0px'
             y='0px'
             viewBox='0 0 68.5 68.5'
-            enable-background='new 0 0 68.5 68.5'
-            xmlSspace='preserve'
+            enableBackground='new 0 0 68.5 68.5'
+            xmlSpace='preserve'
           >
             <g id='loader-group'>
               <path className='circle circle-8' opacity='0.6' d='M43.577,12.847c0.515,0.202,0.777,0.685,0.552,1.19l0,0c-0.233,0.504-0.8,0.655-1.297,0.425
