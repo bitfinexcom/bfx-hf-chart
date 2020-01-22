@@ -488,12 +488,12 @@ export default class Chart extends React.Component {
                 <p>{settings.name}</p>
 
                 <i
-                  className='icon-settings-icon'
+                  className='icon-settings'
                   onClick={() => this.onOpenIndicatorSettings(i)}
                 />
 
                 <i
-                  className='icon-cancel'
+                  className='icon-delete'
                   onClick={() => onDeleteIndicator(i)}
                 />
               </li>
