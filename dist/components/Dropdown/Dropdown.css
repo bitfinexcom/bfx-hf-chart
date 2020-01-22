@@ -1,0 +1,29 @@
+.bfxc__dropdown-menu {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  background: #000;
+  z-index: 99999999;
+  border-left: 1px solid #2a2e39;
+  border-right: 1px solid #2a2e39;
+  border-bottom: 1px solid #2a2e39;
+}
+
+.bfxc__dropdown-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bfxc__dropdown-menu li {
+  line-height: 20px;
+  padding-left: 16px;
+  font-size: 11px;
+  color: #6b7b8b;
+  border-bottom: 1px solid #2a2e39;
+}
+
+.bfxc__dropdown-menu li:hover {
+  cursor: pointer;
+  color: #54b361;
+}
