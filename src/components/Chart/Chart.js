@@ -1,6 +1,5 @@
 import React from 'react'
 import ClassNames from 'classnames'
-import Scrollbars from 'react-custom-scrollbars'
 import { TIME_FRAME_WIDTHS } from 'bfx-hf-util'
 import HFI from 'bfx-hf-indicators'
 import randomColor from 'randomcolor'
@@ -401,11 +400,11 @@ export default class Chart extends React.Component {
               <div className='bfxc__topbar-indicators bfxcs__topbar-section'>
                 <Dropdown
                   label={(
-                    <p>
+                    <span>
                       <i className='icon-indicators' />
                       Indicators
                       <i className='icon-chevron-down-passive' />
-                    </p>
+                    </span>
                   )}
                 >
                   <ul>
