@@ -222,6 +222,15 @@ export default class BitfinexTradingChart {
     this.vp.size.w = width - CONFIG.MARGIN_RIGHT - 0.5
     this.vp.size.h = height - CONFIG.MARGIN_BOTTOM - CONFIG.AXIS_MARGIN_BOTTOM - 0.5
 
+    if (this.onUpdateIndicatorSettingsCB) {
+      const ohlcHeight = this.getOHLCVPHeight()
+      const slotHeight = this.externalIndicators === 0
+        ? 0
+        : (this.vp.size.h - ohlcHeight) / this.externalIndicators
+
+      this.onUpdateIndicatorSettingsCB(this.indicators, slotHeight)
+    }
+
     this.clipCanvases()
     this.clearAll()
     this.renderAll()
