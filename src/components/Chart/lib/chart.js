@@ -266,6 +266,10 @@ export default class BitfinexTradingChart {
     const start = this.data.length - 1 - this.viewportWidthCandles - candlePanOffset
     const end = this.data.length - 1 - candlePanOffset
 
+    if (end < 0) {
+      return []
+    }
+
     return this.data.slice(_max([0, start]), end)
   }
 
