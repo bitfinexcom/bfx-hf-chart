@@ -1,0 +1,56 @@
+{
+  "name": "bitfinex-chart",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/components/Chart/Chart.js",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "bfx-api-node-models": "^1.1.2",
+    "bfx-hf-indicators": "^2.0.3",
+    "bfx-hf-util": "^1.0.5",
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "randomcolor": "^0.5.4",
+    "react": "^16.12.0",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.12.0",
+    "react-onclickoutside": "^6.9.0",
+    "react-scripts": "3.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build": "babel ./src -d ./dist && cp package.json dist/ && cp src/components/Chart/Chart.css dist/components/Chart/Chart.css && cp src/components/Dropdown/Dropdown.css dist/components/Dropdown/Dropdown.css && cp -r src/components/Chart/icon_font dist/components/Chart/icon_font"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-transform-react-jsx": "^7.7.4",
+    "babel-core": "^6.26.3",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0"
+  }
+}
