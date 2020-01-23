@@ -1,6 +1,5 @@
 import React from 'react'
 import { AutoSizer } from 'react-virtualized'
-import BFXI from 'bfx-hf-indicators'
 import Chart from './components/Chart'
 import MockCandleData from './btc_candle_data.json'
 import './Demo.css'
@@ -22,10 +21,9 @@ export default class Demo extends React.PureComponent {
     }
 
     try {
-      return JSON.parse(localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON)
-        .map(([iClassID, iArgs, iColors]) => (
-          [Object.values(BFXI).find(i => i.id === iClassID), iArgs, iColors]
-        ))
+      return Chart.unserializeIndicators(
+        localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON
+      )
     } catch {
       return []
     }
@@ -99,11 +97,7 @@ export default class Demo extends React.PureComponent {
     }
 
     const { indicators } = this.state
-    const stored = indicators.map(([iClass, iArgs, iColors]) => (
-      [iClass.id, iArgs, iColors]
-    ))
-
-    localStorage.setItem(INDICATORS_STORAGE_KEY, JSON.stringify(stored))
+    localStorage.setItem(INDICATORS_STORAGE_KEY, Chart.serializeIndicators(indicators))
   }
 
   render () {

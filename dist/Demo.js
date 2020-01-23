@@ -2,8 +2,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 import React from 'react';
 import { AutoSizer } from 'react-virtualized';
-import BFXI from 'bfx-hf-indicators';
 import Chart from './components/Chart';
+import serializeIndicators from './components/Chart/lib/util/serialize_indicators';
+import unserializeIndicators from './components/Chart/lib/util/unserialize_indicators';
 import MockCandleData from './btc_candle_data.json';
 import './Demo.css';
 const INDICATORS_STORAGE_KEY = 'bfxc-demo-indicators';
@@ -16,7 +17,7 @@ export default class Demo extends React.PureComponent {
     }
 
     try {
-      return JSON.parse(localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON).map(([iClassID, iArgs, iColors]) => [Object.values(BFXI).find(i => i.id === iClassID), iArgs, iColors]);
+      return unserializeIndicators(localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON);
     } catch {
       return [];
     }
@@ -97,8 +98,7 @@ export default class Demo extends React.PureComponent {
     const {
       indicators
     } = this.state;
-    const stored = indicators.map(([iClass, iArgs, iColors]) => [iClass.id, iArgs, iColors]);
-    localStorage.setItem(INDICATORS_STORAGE_KEY, JSON.stringify(stored));
+    localStorage.setItem(INDICATORS_STORAGE_KEY, serializeIndicators(indicators));
   }
 
   render() {

@@ -11,6 +11,9 @@ import LineDrawing from './lib/drawings/line'
 import HorizontalLineDrawing from './lib/drawings/horizontal_line'
 import VerticalLineDrawing from './lib/drawings/vertical_line'
 import ParallelLineDrawing from './lib/drawings/parallel_lines'
+import serializeIndicators from './lib/util/serialize_indicators'
+import unserializeIndicators from './lib/util/unserialize_indicators'
+
 import LoadingBeeSpinner from '../LoadingBeeSpinner'
 import IndicatorSettingsModal from '../IndicatorSettingsModal'
 
@@ -20,7 +23,9 @@ import './icon_font/styles.css'
 const TOPBAR_HEIGHT = 45
 const TOOLBAR_HEIGHT = 45
 
-export default class Chart extends React.Component {
+// Library methods are made available on the class before export
+// (to maintain CRA index.js)
+class Chart extends React.Component {
   state = {
     hoveredCandle: null,
     indicatorSettings: [],
@@ -520,3 +525,8 @@ export default class Chart extends React.Component {
     )
   }
 }
+
+Chart.serializeIndicators = serializeIndicators
+Chart.unserializeIndicators = unserializeIndicators
+
+export default Chart
