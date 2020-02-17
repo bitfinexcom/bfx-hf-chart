@@ -5,7 +5,6 @@ import randomColor from 'randomcolor'
 
 import Dropdown from '../Dropdown'
 import ChartLib from './lib/chart'
-import formatAxisTick from './lib/util/format_axis_tick'
 import LineDrawing from './lib/drawings/line'
 import HorizontalLineDrawing from './lib/drawings/horizontal_line'
 import VerticalLineDrawing from './lib/drawings/vertical_line'
@@ -339,7 +338,6 @@ class Chart extends React.Component {
     const height = isFullscreen ? window.innerHeight : this.props.height
     const width = isFullscreen ? window.innerWidth : this.props.width
 
-    const { hoveredCandle } = this.state
     const topReservedSpace = this.getTopReservedSpace()
     const renderHeight = this.getChartHeight()
     const canvasStyle = {
@@ -370,25 +368,6 @@ class Chart extends React.Component {
             <p className='bfxcs__topbar-market'>
               {marketLabel}
             </p>
-
-            <div className='bfxcs__topbar-ohlc bfxcs__topbar-section'>
-              <div className='bfxcs__topbar-ohlc-entry'>
-                <p>O</p>
-                <p>{hoveredCandle ? formatAxisTick(hoveredCandle[1]) : '-'}</p>
-              </div>
-              <div className='bfxcs__topbar-ohlc-entry'>
-                <p>H</p>
-                <p>{hoveredCandle ? formatAxisTick(hoveredCandle[3]) : '-'}</p>
-              </div>
-              <div className='bfxcs__topbar-ohlc-entry'>
-                <p>L</p>
-                <p>{hoveredCandle ? formatAxisTick(hoveredCandle[4]) : '-'}</p>
-              </div>
-              <div className='bfxcs__topbar-ohlc-entry'>
-                <p>C</p>
-                <p>{hoveredCandle ? formatAxisTick(hoveredCandle[2]) : '-'}</p>
-              </div>
-            </div>
 
             <div className='bfxcs__topbar-tfs bfxcs__topbar-section'>
               <Dropdown

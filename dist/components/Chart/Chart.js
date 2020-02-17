@@ -6,7 +6,6 @@ import HFI from 'bfx-hf-indicators';
 import randomColor from 'randomcolor';
 import Dropdown from '../Dropdown';
 import ChartLib from './lib/chart';
-import formatAxisTick from './lib/util/format_axis_tick';
 import LineDrawing from './lib/drawings/line';
 import HorizontalLineDrawing from './lib/drawings/horizontal_line';
 import VerticalLineDrawing from './lib/drawings/vertical_line';
@@ -366,9 +365,6 @@ class Chart extends React.Component {
     } = this.props;
     const height = isFullscreen ? window.innerHeight : this.props.height;
     const width = isFullscreen ? window.innerWidth : this.props.width;
-    const {
-      hoveredCandle
-    } = this.state;
     const topReservedSpace = this.getTopReservedSpace();
     const renderHeight = this.getChartHeight();
     const canvasStyle = {
@@ -394,16 +390,6 @@ class Chart extends React.Component {
     }, React.createElement("p", {
       className: "bfxcs__topbar-market"
     }, marketLabel), React.createElement("div", {
-      className: "bfxcs__topbar-ohlc bfxcs__topbar-section"
-    }, React.createElement("div", {
-      className: "bfxcs__topbar-ohlc-entry"
-    }, React.createElement("p", null, "O"), React.createElement("p", null, hoveredCandle ? formatAxisTick(hoveredCandle[1]) : '-')), React.createElement("div", {
-      className: "bfxcs__topbar-ohlc-entry"
-    }, React.createElement("p", null, "H"), React.createElement("p", null, hoveredCandle ? formatAxisTick(hoveredCandle[3]) : '-')), React.createElement("div", {
-      className: "bfxcs__topbar-ohlc-entry"
-    }, React.createElement("p", null, "L"), React.createElement("p", null, hoveredCandle ? formatAxisTick(hoveredCandle[4]) : '-')), React.createElement("div", {
-      className: "bfxcs__topbar-ohlc-entry"
-    }, React.createElement("p", null, "C"), React.createElement("p", null, hoveredCandle ? formatAxisTick(hoveredCandle[2]) : '-'))), React.createElement("div", {
       className: "bfxcs__topbar-tfs bfxcs__topbar-section"
     }, React.createElement(Dropdown, {
       label: React.createElement("span", null, candleWidth, React.createElement("i", {

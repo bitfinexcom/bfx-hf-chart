@@ -52,29 +52,9 @@ p.bfxcs__topbar-market {
   border-right: 1px solid #2a2e39;
 }
 
-.bfxcs__topbar-ohlc {
-  width: 350px
-}
-
-.bfxcs__topbar-tfs p,
-.bfxcs__topbar-ohlc-entry,
-.bfxcs__topbar-ohlc-entry p {
+.bfxcs__topbar-tfs p {
   display: inline-block;
   vertical-align: top;
-}
-
-.bfxcs__topbar-ohlc-entry {
-  margin-right: 16px;
-  font-size: 13px;
-}
-
-.bfxcs__topbar-ohlc-entry p:first-child {
-  margin-right: 4px;
-  color: #fff;
-}
-
-.bfxcs__topbar-ohlc-entry p:last-child {
-  color: #54b361;
 }
 
 .bfxcs__topbar-tfs p {

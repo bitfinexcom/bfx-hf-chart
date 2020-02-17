@@ -57,6 +57,7 @@ export default class BitfinexTradingChart {
     this.candleWidthPX = Math.max(1, 7 - Math.floor(this.viewportWidthCandles / 50));
     this.isDragging = false;
     this.dragStart = null;
+    this.lastHoveredCandle = null;
     this.mousePosition = {
       x: 0,
       y: 0
@@ -287,6 +288,7 @@ export default class BitfinexTradingChart {
 
   renderAll() {
     this.renderOHLC();
+    this.renderHoveredOHLC();
     this.renderTrades();
     this.renderIndicators();
     this.renderAxis();
@@ -651,10 +653,13 @@ export default class BitfinexTradingChart {
     } // Find nearest candle
 
 
+    const candleDistances = candlesInView.map((c, i) => [Math.abs(c[0] - mouseMTS), i]);
+    candleDistances.sort((a, b) => a[0] - b[0]);
+    const lastHoveredCandle = candlesInView[candleDistances[0][1]];
+    this.lastHoveredCandle = lastHoveredCandle;
+
     if (this.onHoveredCandleCB) {
-      const candleDistances = candlesInView.map((c, i) => [Math.abs(c[0] - mouseMTS), i]);
-      candleDistances.sort((a, b) => a[0] - b[0]);
-      this.onHoveredCandleCB(candlesInView[candleDistances[0][1]]);
+      this.onHoveredCandleCB(lastHoveredCandle);
     }
   }
 
@@ -817,6 +822,48 @@ export default class BitfinexTradingChart {
     return this.vp.size.h - _min([this.vp.size.h / 2, this.externalIndicators * 100]);
   }
 
+  renderHoveredOHLC() {
+    if (!this.lastHoveredCandle) {
+      return;
+    }
+
+    const ctx = this.crosshairCanvas.getContext('2d');
+    let x = CONFIG.OHLC_LABEL_POSITION_X;
+    let y = CONFIG.OHLC_LABEL_POSITION_Y;
+    ctx.font = `${CONFIG.OHLC_LABEL_FONT_SIZE_PX} ${CONFIG.OHLC_LABEL_FONT_NAME}`;
+    ctx.textAlign = 'left';
+    const o = formatAxisTick(this.lastHoveredCandle[1]);
+    const h = formatAxisTick(this.lastHoveredCandle[3]);
+    const l = formatAxisTick(this.lastHoveredCandle[4]);
+    const c = formatAxisTick(this.lastHoveredCandle[2]);
+    const oWidth = ctx.measureText('O:').width;
+    const hWidth = ctx.measureText('H:').width;
+    const lWidth = ctx.measureText('L:').width;
+    const cWidth = ctx.measureText('C:').width;
+    const oVWidth = ctx.measureText(o).width;
+    const hVWidth = ctx.measureText(h).width;
+    const lVWidth = ctx.measureText(l).width;
+    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillText('O:', x, y);
+    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(o, x + oWidth + CONFIG.OHLC_LABEL_SPACING, y);
+    x = x + oWidth + CONFIG.OHLC_LABEL_SPACING * 2 + oVWidth;
+    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillText('H:', x, y);
+    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(h, x + hWidth + CONFIG.OHLC_LABEL_SPACING, y);
+    x = x + hWidth + CONFIG.OHLC_LABEL_SPACING * 2 + hVWidth;
+    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillText('L:', x, y);
+    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(l, x + lWidth + CONFIG.OHLC_LABEL_SPACING, y);
+    x = x + lWidth + CONFIG.OHLC_LABEL_SPACING * 2 + lVWidth;
+    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillText('C:', x, y);
+    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(c, x + cWidth + CONFIG.OHLC_LABEL_SPACING, y);
+  }
+
   renderOHLC() {
     const ctx = this.ohlcCanvas.getContext('2d');
     const candles = this.getCandlesInView();
@@ -922,6 +969,7 @@ export default class BitfinexTradingChart {
       this.renderDrawings();
       this.renderOrders();
       this.renderPosition();
+      this.renderHoveredOHLC();
     }
   }
 
