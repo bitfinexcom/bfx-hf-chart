@@ -3,8 +3,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 import React from 'react';
 import { AutoSizer } from 'react-virtualized';
 import Chart from './components/Chart';
-import serializeIndicators from './components/Chart/lib/util/serialize_indicators';
-import unserializeIndicators from './components/Chart/lib/util/unserialize_indicators';
 import MockCandleData from './btc_candle_data.json';
 import './Demo.css';
 const INDICATORS_STORAGE_KEY = 'bfxc-demo-indicators';
@@ -17,7 +15,7 @@ export default class Demo extends React.PureComponent {
     }
 
     try {
-      return unserializeIndicators(localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON);
+      return Chart.unserializeIndicators(localStorage.getItem(INDICATORS_STORAGE_KEY) || DEFAULT_INDICATORS_JSON);
     } catch {
       return [];
     }
@@ -98,7 +96,7 @@ export default class Demo extends React.PureComponent {
     const {
       indicators
     } = this.state;
-    localStorage.setItem(INDICATORS_STORAGE_KEY, serializeIndicators(indicators));
+    localStorage.setItem(INDICATORS_STORAGE_KEY, Chart.serializeIndicators(indicators));
   }
 
   render() {

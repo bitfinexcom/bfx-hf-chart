@@ -1,5 +1,4 @@
 import React from 'react'
-import ClassNames from 'classnames'
 import { TIME_FRAME_WIDTHS } from 'bfx-hf-util'
 import HFI from 'bfx-hf-indicators'
 import randomColor from 'randomcolor'
@@ -392,13 +391,23 @@ class Chart extends React.Component {
             </div>
 
             <div className='bfxcs__topbar-tfs bfxcs__topbar-section'>
-              {Object.keys(TIME_FRAME_WIDTHS).map(tf => (
-                <p
-                  key={tf}
-                  className={ClassNames({ active: tf === candleWidth })}
-                  onClick={() => onTimeFrameChange && onTimeFrameChange(tf)}
-                >{tf}</p>
-              ))}
+              <Dropdown
+                label={(
+                  <span>
+                    {candleWidth}
+                    <i className='icon-chevron-down-passive' />
+                  </span>
+                )}
+              >
+                <ul>
+                  {Object.keys(TIME_FRAME_WIDTHS).map(tf => (
+                    <li
+                      key={tf}
+                      onClick={() => onTimeFrameChange && onTimeFrameChange(tf)}
+                    >{tf}</li>
+                  ))}
+                </ul>
+              </Dropdown>
             </div>
 
             {!disableIndicators && (

@@ -1,7 +1,6 @@
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 import React from 'react';
-import ClassNames from 'classnames';
 import { TIME_FRAME_WIDTHS } from 'bfx-hf-util';
 import HFI from 'bfx-hf-indicators';
 import randomColor from 'randomcolor';
@@ -406,13 +405,14 @@ class Chart extends React.Component {
       className: "bfxcs__topbar-ohlc-entry"
     }, React.createElement("p", null, "C"), React.createElement("p", null, hoveredCandle ? formatAxisTick(hoveredCandle[2]) : '-'))), React.createElement("div", {
       className: "bfxcs__topbar-tfs bfxcs__topbar-section"
-    }, Object.keys(TIME_FRAME_WIDTHS).map(tf => React.createElement("p", {
+    }, React.createElement(Dropdown, {
+      label: React.createElement("span", null, candleWidth, React.createElement("i", {
+        className: "icon-chevron-down-passive"
+      }))
+    }, React.createElement("ul", null, Object.keys(TIME_FRAME_WIDTHS).map(tf => React.createElement("li", {
       key: tf,
-      className: ClassNames({
-        active: tf === candleWidth
-      }),
       onClick: () => onTimeFrameChange && onTimeFrameChange(tf)
-    }, tf))), !disableIndicators && React.createElement("div", {
+    }, tf))))), !disableIndicators && React.createElement("div", {
       className: "bfxc__topbar-indicators bfxcs__topbar-section"
     }, React.createElement(Dropdown, {
       label: React.createElement("span", null, React.createElement("i", {
