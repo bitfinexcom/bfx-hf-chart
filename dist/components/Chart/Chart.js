@@ -361,7 +361,10 @@ class Chart extends React.Component {
       disableTopbar,
       onDeleteIndicator,
       disableIndicators,
-      candleLoadingThreshold = 0
+      candleLoadingThreshold = 0,
+      extraHeaderComponentsLeft,
+      extraHeaderComponentsRight,
+      showMarketLabel
     } = this.props;
     const height = isFullscreen ? window.innerHeight : this.props.height;
     const width = isFullscreen ? window.innerWidth : this.props.width;
@@ -387,7 +390,7 @@ class Chart extends React.Component {
       }
     }), !disableTopbar && React.createElement("div", {
       className: "bfxc__topbar"
-    }, React.createElement("p", {
+    }, extraHeaderComponentsLeft, showMarketLabel && React.createElement("p", {
       className: "bfxcs__topbar-market"
     }, marketLabel), React.createElement("div", {
       className: "bfxcs__topbar-tfs bfxcs__topbar-section"
@@ -416,7 +419,7 @@ class Chart extends React.Component {
       onClick: this.onToggleFullscreen
     })), isSyncing && React.createElement("div", {
       className: "bfxc__topbar-spinner"
-    })), !disableToolbar && React.createElement("ul", {
+    }), extraHeaderComponentsRight), !disableToolbar && React.createElement("ul", {
       className: "bfxc__toolbar"
     }, React.createElement("li", {
       onClick: () => onAddDrawing && onAddDrawing(LineDrawing)
