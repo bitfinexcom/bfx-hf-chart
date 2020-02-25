@@ -332,7 +332,8 @@ class Chart extends React.Component {
     const {
       marketLabel, bgColor = '#000', candleWidth, candles, onTimeFrameChange,
       onAddDrawing, isSyncing, disableToolbar, disableTopbar, onDeleteIndicator,
-      disableIndicators, candleLoadingThreshold = 0
+      disableIndicators, candleLoadingThreshold = 0, extraHeaderComponentsLeft,
+      extraHeaderComponentsRight, showMarketLabel,
     } = this.props
 
     const height = isFullscreen ? window.innerHeight : this.props.height
@@ -365,9 +366,13 @@ class Chart extends React.Component {
 
         {!disableTopbar && (
           <div className='bfxc__topbar'>
-            <p className='bfxcs__topbar-market'>
-              {marketLabel}
-            </p>
+            {extraHeaderComponentsLeft}
+
+            {showMarketLabel && (
+              <p className='bfxcs__topbar-market'>
+                {marketLabel}
+              </p>
+            )}
 
             <div className='bfxcs__topbar-tfs bfxcs__topbar-section'>
               <Dropdown
@@ -420,6 +425,7 @@ class Chart extends React.Component {
             </div>
 
             {isSyncing && (<div className='bfxc__topbar-spinner' />)}
+            {extraHeaderComponentsRight}
           </div>
         )}
 
