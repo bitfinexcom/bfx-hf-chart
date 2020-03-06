@@ -1,3 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 /**
  * Returns the distance between two points
  *
@@ -7,6 +13,6 @@
  * @param {number} y2
  * @return {number} distance
  */
-export default ((x1, y1, x2, y2) => {
+exports.default = (x1, y1, x2, y2) => {
   return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-});
+};

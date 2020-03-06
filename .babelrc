@@ -1,6 +1,7 @@
 {
   "plugins": [
     "@babel/plugin-transform-react-jsx",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "babel-plugin-transform-es2015-modules-commonjs"
   ]
 }

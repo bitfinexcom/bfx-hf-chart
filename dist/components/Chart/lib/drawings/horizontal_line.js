@@ -1,5 +1,16 @@
-import Drawing from './drawing';
-export default class HorizontalLineDrawing extends Drawing {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _drawing = require("./drawing");
+
+var _drawing2 = _interopRequireDefault(_drawing);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class HorizontalLineDrawing extends _drawing2.default {
   constructor(chart) {
     super(chart, [{
       keyX: '__mouse',
@@ -34,3 +45,5 @@ export default class HorizontalLineDrawing extends Drawing {
   }
 
 }
+
+exports.default = HorizontalLineDrawing;
