@@ -1,6 +1,20 @@
-import drawLine from '../draw/line';
-import Drawing from './drawing';
-export default class ParallelLineDrawing extends Drawing {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _line = require("../draw/line");
+
+var _line2 = _interopRequireDefault(_line);
+
+var _drawing = require("./drawing");
+
+var _drawing2 = _interopRequireDefault(_drawing);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class ParallelLineDrawing extends _drawing2.default {
   constructor(chart) {
     super(chart, [{
       keyX: 'start.mts',
@@ -63,7 +77,7 @@ export default class ParallelLineDrawing extends Drawing {
       x: this.chart.vp.size.w,
       y: m * this.chart.vp.size.w + b
     });
-    drawLine(this.chart.drawingCanvas, '#fff', linePoints);
+    (0, _line2.default)(this.chart.drawingCanvas, '#fff', linePoints);
 
     if (this.start && this.end) {
       const pLinePoints = [];
@@ -77,10 +91,12 @@ export default class ParallelLineDrawing extends Drawing {
         x: this.chart.vp.size.w,
         y: m * this.chart.vp.size.w + pB
       });
-      drawLine(this.chart.drawingCanvas, '#fff', pLinePoints);
+      (0, _line2.default)(this.chart.drawingCanvas, '#fff', pLinePoints);
     }
 
     this.renderAnchors();
   }
 
 }
+
+exports.default = ParallelLineDrawing;

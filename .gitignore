@@ -12,3 +12,4 @@ package-lock.json
 !db/.keep
 db/*
 build/
+tags

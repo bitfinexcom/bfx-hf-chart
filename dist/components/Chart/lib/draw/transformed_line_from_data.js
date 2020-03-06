@@ -1,5 +1,10 @@
-import drawLine from './line';
-export default function (canvas, color, transformer, {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (canvas, color, transformer, {
   yData,
   xData,
   ySize,
@@ -16,5 +21,11 @@ export default function (canvas, color, transformer, {
     });
   }
 
-  drawLine(canvas, color, points);
-}
+  (0, _line2.default)(canvas, color, points);
+};
+
+var _line = require("./line");
+
+var _line2 = _interopRequireDefault(_line);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

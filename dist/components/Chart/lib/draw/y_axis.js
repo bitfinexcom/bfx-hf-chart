@@ -1,8 +1,31 @@
-import _max from 'lodash/max';
-import _min from 'lodash/min';
-import drawLine from './line';
-import formatAxisTick from '../util/format_axis_tick';
-import CONFIG from '../config';
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _max2 = require("lodash/max");
+
+var _max3 = _interopRequireDefault(_max2);
+
+var _min2 = require("lodash/min");
+
+var _min3 = _interopRequireDefault(_min2);
+
+var _line = require("./line");
+
+var _line2 = _interopRequireDefault(_line);
+
+var _format_axis_tick = require("../util/format_axis_tick");
+
+var _format_axis_tick2 = _interopRequireDefault(_format_axis_tick);
+
+var _config = require("../config");
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * Renders a Y-axis at the specified X coord with dynamic tick rendering based
  * on the provided candle dataset.
@@ -13,35 +36,31 @@ import CONFIG from '../config';
  * @param {number} height - total axis height in px
  * @param {number} vpHeight - actual viewport height in px
  */
-
-export default ((canvas, candles, x, height, vpHeight) => {
+exports.default = (canvas, candles, x, height, vpHeight) => {
   const ctx = canvas.getContext('2d');
-  ctx.font = `${CONFIG.AXIS_LABEL_FONT_SIZE_PX} ${CONFIG.AXIS_LABEL_FONT_NAME}`;
-  ctx.fillStyle = CONFIG.AXIS_LABEL_COLOR;
+  ctx.font = `${_config2.default.AXIS_LABEL_FONT_SIZE_PX} ${_config2.default.AXIS_LABEL_FONT_NAME}`;
+  ctx.fillStyle = _config2.default.AXIS_LABEL_COLOR;
   ctx.textAlign = 'left';
-  drawLine(canvas, CONFIG.AXIS_COLOR, [{
+  (0, _line2.default)(canvas, _config2.default.AXIS_COLOR, [{
     x,
     y: 0
   }, {
     x,
     y: height
   }]);
-
-  const maxP = _max(candles.map(ohlc => ohlc[3]));
-
-  const minP = _min(candles.map(ohlc => ohlc[4]));
-
+  const maxP = (0, _max3.default)(candles.map(ohlc => ohlc[3]));
+  const minP = (0, _min3.default)(candles.map(ohlc => ohlc[4]));
   const pd = maxP - minP;
-  const tickHeightPX = vpHeight / CONFIG.AXIS_Y_TICK_COUNT;
-  const tickHeightPrice = pd / CONFIG.AXIS_Y_TICK_COUNT;
+  const tickHeightPX = vpHeight / _config2.default.AXIS_Y_TICK_COUNT;
+  const tickHeightPrice = pd / _config2.default.AXIS_Y_TICK_COUNT;
 
-  for (let i = 0; i < CONFIG.AXIS_Y_TICK_COUNT; i += 1) {
+  for (let i = 0; i < _config2.default.AXIS_Y_TICK_COUNT; i += 1) {
     const tickY = vpHeight - tickHeightPX * i;
-    const tickX = x + CONFIG.AXIS_LABEL_MARGIN_PX;
+    const tickX = x + _config2.default.AXIS_LABEL_MARGIN_PX;
     const tick = minP + tickHeightPrice * i;
-    ctx.fillText(formatAxisTick(tick), tickX, tickY + CONFIG.AXIS_LABEL_FONT_SIZE_PX / 2, canvas.width - x); // tick
+    ctx.fillText((0, _format_axis_tick2.default)(tick), tickX, tickY + _config2.default.AXIS_LABEL_FONT_SIZE_PX / 2, canvas.width - x); // tick
 
-    drawLine(canvas, CONFIG.AXIS_TICK_COLOR, [{
+    (0, _line2.default)(canvas, _config2.default.AXIS_TICK_COLOR, [{
       x: tickX - 3,
       y: tickY
     }, {
@@ -49,4 +68,4 @@ export default ((canvas, candles, x, height, vpHeight) => {
       y: tickY
     }]);
   }
-});
+};

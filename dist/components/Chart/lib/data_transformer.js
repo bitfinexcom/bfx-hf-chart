@@ -1,20 +1,12 @@
-import _max from 'lodash/max';
-import _min from 'lodash/min';
-/**
- * Returns a transformer object with methods to map X & Y coords to a certain
- * viewport.
- *
- * @param {number[]} data - complete dataset for min/max bounds
- * @param {number} vWidth - viewport width in pixels
- * @param {number} rightMTS - right-most timestamp
- * @return {Object} transformer
- */
+"use strict";
 
-export default function (data, vWidth, rightMTS) {
-  const maxP = _max(data);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  const minP = _min(data);
-
+exports.default = function (data, vWidth, rightMTS) {
+  const maxP = (0, _max3.default)(data);
+  const minP = (0, _min3.default)(data);
   const pd = maxP - minP;
   let defaultTargetWidth;
   let defaultTargetHeight;
@@ -63,4 +55,14 @@ export default function (data, vWidth, rightMTS) {
     setYModifier,
     setXModifier
   };
-}
+};
+
+var _max2 = require("lodash/max");
+
+var _max3 = _interopRequireDefault(_max2);
+
+var _min2 = require("lodash/min");
+
+var _min3 = _interopRequireDefault(_min2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

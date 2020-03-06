@@ -1,21 +1,76 @@
-import _isFunction from 'lodash/isFunction';
-import _isFinite from 'lodash/isFinite';
-import _isObject from 'lodash/isObject';
-import _last from 'lodash/last';
-import _max from 'lodash/max';
-import _min from 'lodash/min';
-import { Candle } from 'bfx-api-node-models';
-import { TIME_FRAME_WIDTHS } from 'bfx-hf-util';
-import mouseWheelListener from 'mouse-wheel';
-import formatAxisTick from './util/format_axis_tick';
-import drawLine from './draw/line';
-import dataTransformer from './data_transformer';
-import drawTransformedLineFromData from './draw/transformed_line_from_data';
-import drawOHLCSeries from './draw/ohlc_series';
-import drawXAxis from './draw/x_axis';
-import drawYAxis from './draw/y_axis';
-import CONFIG, { set as setConfig } from './config';
-export default class BitfinexTradingChart {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _isFunction2 = require("lodash/isFunction");
+
+var _isFunction3 = _interopRequireDefault(_isFunction2);
+
+var _isFinite2 = require("lodash/isFinite");
+
+var _isFinite3 = _interopRequireDefault(_isFinite2);
+
+var _isObject2 = require("lodash/isObject");
+
+var _isObject3 = _interopRequireDefault(_isObject2);
+
+var _last2 = require("lodash/last");
+
+var _last3 = _interopRequireDefault(_last2);
+
+var _max2 = require("lodash/max");
+
+var _max3 = _interopRequireDefault(_max2);
+
+var _min2 = require("lodash/min");
+
+var _min3 = _interopRequireDefault(_min2);
+
+var _bfxApiNodeModels = require("bfx-api-node-models");
+
+var _bfxHfUtil = require("bfx-hf-util");
+
+var _mouseWheel = require("mouse-wheel");
+
+var _mouseWheel2 = _interopRequireDefault(_mouseWheel);
+
+var _format_axis_tick = require("./util/format_axis_tick");
+
+var _format_axis_tick2 = _interopRequireDefault(_format_axis_tick);
+
+var _line = require("./draw/line");
+
+var _line2 = _interopRequireDefault(_line);
+
+var _data_transformer = require("./data_transformer");
+
+var _data_transformer2 = _interopRequireDefault(_data_transformer);
+
+var _transformed_line_from_data = require("./draw/transformed_line_from_data");
+
+var _transformed_line_from_data2 = _interopRequireDefault(_transformed_line_from_data);
+
+var _ohlc_series = require("./draw/ohlc_series");
+
+var _ohlc_series2 = _interopRequireDefault(_ohlc_series);
+
+var _x_axis = require("./draw/x_axis");
+
+var _x_axis2 = _interopRequireDefault(_x_axis);
+
+var _y_axis = require("./draw/y_axis");
+
+var _y_axis2 = _interopRequireDefault(_y_axis);
+
+var _config = require("./config");
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class BitfinexTradingChart {
   constructor({
     ohlcCanvas,
     axisCanvas,
@@ -37,7 +92,7 @@ export default class BitfinexTradingChart {
     config = {}
   }) {
     Object.keys(config).forEach(key => {
-      setConfig(key, config[key]);
+      (0, _config.set)(key, config[key]);
     });
     this.ohlcCanvas = ohlcCanvas;
     this.axisCanvas = axisCanvas;
@@ -49,7 +104,7 @@ export default class BitfinexTradingChart {
     this.trades = trades;
     this.orders = orders;
     this.position = position;
-    this.dataWidth = TIME_FRAME_WIDTHS[dataWidth];
+    this.dataWidth = _bfxHfUtil.TIME_FRAME_WIDTHS[dataWidth];
     this.onLoadMoreCB = onLoadMoreCB;
     this.onHoveredCandleCB = onHoveredCandleCB;
     this.onUpdateIndicatorSettingsCB = onUpdateIndicatorSettingsCB;
@@ -72,8 +127,8 @@ export default class BitfinexTradingChart {
         y: 0
       },
       size: {
-        w: width - CONFIG.MARGIN_RIGHT - 0.5,
-        h: height - CONFIG.MARGIN_BOTTOM - CONFIG.AXIS_MARGIN_BOTTOM - 0.5
+        w: width - _config2.default.MARGIN_RIGHT - 0.5,
+        h: height - _config2.default.MARGIN_BOTTOM - _config2.default.AXIS_MARGIN_BOTTOM - 0.5
       }
     };
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -85,7 +140,7 @@ export default class BitfinexTradingChart {
     this.crosshairCanvas.addEventListener('mousedown', this.onMouseDown);
     this.crosshairCanvas.addEventListener('mousemove', this.onMouseMove);
     this.crosshairCanvas.addEventListener('mouseleave', this.onMouseLeave);
-    mouseWheelListener(this.crosshairCanvas, this.onMouseWheel);
+    (0, _mouseWheel2.default)(this.crosshairCanvas, this.onMouseWheel);
     this.activeDrawing = null;
     this.drawings = [];
     this.externalIndicators = 0; // set in updateData()
@@ -154,7 +209,7 @@ export default class BitfinexTradingChart {
 
   updateData(data = [], dataWidth, dataKey) {
     if (dataWidth) {
-      this.dataWidth = TIME_FRAME_WIDTHS[dataWidth];
+      this.dataWidth = _bfxHfUtil.TIME_FRAME_WIDTHS[dataWidth];
     }
 
     if (this.dataKey && this.dataKey !== dataKey) {
@@ -186,7 +241,7 @@ export default class BitfinexTradingChart {
           continue;
         }
 
-        const c = new Candle(data[i]);
+        const c = new _bfxApiNodeModels.Candle(data[i]);
 
         if (ind.getDataKey() === '*') {
           ind.add(c);
@@ -206,7 +261,7 @@ export default class BitfinexTradingChart {
           indicatorInstances[j][1].ui.lines.forEach(key => nullP[key] = 0);
         }
 
-        this.indicatorData[j].push(_isFinite(v) || _isObject(v) ? v : nullP);
+        this.indicatorData[j].push((0, _isFinite3.default)(v) || (0, _isObject3.default)(v) ? v : nullP);
       }
     }
 
@@ -217,8 +272,8 @@ export default class BitfinexTradingChart {
   updateDimensions(width, height) {
     this.width = width;
     this.height = height;
-    this.vp.size.w = width - CONFIG.MARGIN_RIGHT - 0.5;
-    this.vp.size.h = height - CONFIG.MARGIN_BOTTOM - CONFIG.AXIS_MARGIN_BOTTOM - 0.5;
+    this.vp.size.w = width - _config2.default.MARGIN_RIGHT - 0.5;
+    this.vp.size.h = height - _config2.default.MARGIN_BOTTOM - _config2.default.AXIS_MARGIN_BOTTOM - 0.5;
 
     if (this.onUpdateIndicatorSettingsCB) {
       const ohlcHeight = this.getOHLCVPHeight();
@@ -269,7 +324,7 @@ export default class BitfinexTradingChart {
       return [];
     }
 
-    return this.data.slice(_max([0, start]), end);
+    return this.data.slice((0, _max3.default)([0, start]), end);
   }
 
   getIndicatorDataInView() {
@@ -280,7 +335,7 @@ export default class BitfinexTradingChart {
     for (let i = 0; i < this.indicatorData.length; i += 1) {
       const start = this.indicatorData[i].length - 1 - this.viewportWidthCandles - candlePanOffset;
       const end = this.indicatorData[i].length - 1 - candlePanOffset;
-      dataInView.push(this.indicatorData[i].slice(_max([0, start]), end));
+      dataInView.push(this.indicatorData[i].slice((0, _max3.default)([0, start]), end));
     }
 
     return dataInView;
@@ -348,15 +403,10 @@ export default class BitfinexTradingChart {
     const colors = indicator[2];
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-
-    const maxP = _max(candlesToRender.map(ohlc => ohlc[3]));
-
-    const minP = _min(candlesToRender.map(ohlc => ohlc[4]));
-
+    const maxP = (0, _max3.default)(candlesToRender.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candlesToRender.map(ohlc => ohlc[4]));
     const pd = maxP - minP;
     const topLinePoints = [];
     const middleLinePoints = [];
@@ -383,9 +433,9 @@ export default class BitfinexTradingChart {
       });
     }
 
-    drawLine(this.ohlcCanvas, colors[0], topLinePoints);
-    drawLine(this.ohlcCanvas, colors[1], middleLinePoints);
-    drawLine(this.ohlcCanvas, colors[2], bottomLinePoints);
+    (0, _line2.default)(this.ohlcCanvas, colors[0], topLinePoints);
+    (0, _line2.default)(this.ohlcCanvas, colors[1], middleLinePoints);
+    (0, _line2.default)(this.ohlcCanvas, colors[2], bottomLinePoints);
   }
 
   renderRSIIndicator(indicator, data, exSlot) {
@@ -394,13 +444,11 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators;
-    const slotY = vpHeight + slotHeight * exSlot + CONFIG.AXIS_MARGIN_BOTTOM;
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const slotY = vpHeight + slotHeight * exSlot + _config2.default.AXIS_MARGIN_BOTTOM;
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-    const transformer = dataTransformer(data, vWidth, rightMTS);
-    drawTransformedLineFromData(this.indicatorCanvas, color, transformer, {
+    const transformer = (0, _data_transformer2.default)(data, vWidth, rightMTS);
+    (0, _transformed_line_from_data2.default)(this.indicatorCanvas, color, transformer, {
       yData: data,
       xData: candlesToRender.map(c => c[0]),
       ySize: slotHeight,
@@ -417,17 +465,15 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators;
-    const slotY = vpHeight + slotHeight * exSlot + CONFIG.AXIS_MARGIN_BOTTOM;
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const slotY = vpHeight + slotHeight * exSlot + _config2.default.AXIS_MARGIN_BOTTOM;
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
     const lineKeys = ['macd', 'signal'];
     lineKeys.forEach((lineKey, i) => {
       const color = colors[i];
       const lineData = data.map(p => p[lineKey]);
-      const transformer = dataTransformer(lineData, vWidth, rightMTS);
-      drawTransformedLineFromData(this.indicatorCanvas, color, transformer, {
+      const transformer = (0, _data_transformer2.default)(lineData, vWidth, rightMTS);
+      (0, _transformed_line_from_data2.default)(this.indicatorCanvas, color, transformer, {
         yData: lineData,
         xData: candlesToRender.map(c => c[0]),
         ySize: slotHeight,
@@ -440,16 +486,13 @@ export default class BitfinexTradingChart {
         this.renderExternalSlotMeta(transformer, iInstance.getName(), [0], exSlot);
       }
     });
-
-    const maxV = _max(data.map(p => _max([p.macd, p.signal])));
-
-    const minV = _min(data.map(p => _min([p.macd, p.signal])));
-
-    const divergenceTransformer = dataTransformer([maxV, minV], vWidth, rightMTS);
+    const maxV = (0, _max3.default)(data.map(p => (0, _max3.default)([p.macd, p.signal])));
+    const minV = (0, _min3.default)(data.map(p => (0, _min3.default)([p.macd, p.signal])));
+    const divergenceTransformer = (0, _data_transformer2.default)([maxV, minV], vWidth, rightMTS);
 
     for (let i = 0; i < candlesToRender.length; i += 1) {
       const mts = candlesToRender[i][0];
-      drawTransformedLineFromData(this.indicatorCanvas, colors[2], divergenceTransformer, {
+      (0, _transformed_line_from_data2.default)(this.indicatorCanvas, colors[2], divergenceTransformer, {
         yData: [0, data[i].divergence],
         xData: [mts, mts],
         ySize: slotHeight,
@@ -466,13 +509,11 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators;
-    const slotY = vpHeight + slotHeight * exSlot + CONFIG.AXIS_MARGIN_BOTTOM;
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const slotY = vpHeight + slotHeight * exSlot + _config2.default.AXIS_MARGIN_BOTTOM;
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-    const transformer = dataTransformer(data, vWidth, rightMTS);
-    drawTransformedLineFromData(this.indicatorCanvas, color, transformer, {
+    const transformer = (0, _data_transformer2.default)(data, vWidth, rightMTS);
+    (0, _transformed_line_from_data2.default)(this.indicatorCanvas, color, transformer, {
       yData: data,
       xData: candlesToRender.map(c => c[0]),
       ySize: slotHeight,
@@ -489,15 +530,13 @@ export default class BitfinexTradingChart {
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators;
-    const slotY = vpHeight + slotHeight * exSlot + CONFIG.AXIS_MARGIN_BOTTOM;
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const slotY = vpHeight + slotHeight * exSlot + _config2.default.AXIS_MARGIN_BOTTOM;
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
     indicator[0].ui.lines.forEach((lineKey, i) => {
       const lineData = data.map(p => p[lineKey]);
-      const transformer = dataTransformer(lineData, vWidth, rightMTS);
-      drawTransformedLineFromData(this.indicatorCanvas, colors[i], transformer, {
+      const transformer = (0, _data_transformer2.default)(lineData, vWidth, rightMTS);
+      (0, _transformed_line_from_data2.default)(this.indicatorCanvas, colors[i], transformer, {
         yData: lineData,
         xData: candlesToRender.map(c => c[0]),
         ySize: slotHeight,
@@ -515,16 +554,16 @@ export default class BitfinexTradingChart {
   renderExternalSlotMeta(transformer, label, xAxes, exSlot) {
     const vpHeight = this.getOHLCVPHeight();
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators;
-    const slotY = vpHeight + slotHeight * exSlot + CONFIG.AXIS_MARGIN_BOTTOM;
+    const slotY = vpHeight + slotHeight * exSlot + _config2.default.AXIS_MARGIN_BOTTOM;
     const ctx = this.indicatorCanvas.getContext('2d');
 
     for (let i = 0; i < xAxes.length; i += 1) {
       const axis = xAxes[i];
       const axisY = transformer.y(axis, slotHeight);
-      this.drawHorizontalVPLine(this.indicatorCanvas, CONFIG.AXIS_COLOR, slotY + slotHeight - axisY);
+      this.drawHorizontalVPLine(this.indicatorCanvas, _config2.default.AXIS_COLOR, slotY + slotHeight - axisY);
       ctx.fillStyle = '#fff';
       ctx.textAlign = 'left';
-      ctx.fillText(formatAxisTick(axis), this.vp.size.w + 5, slotY + slotHeight - axisY + 3);
+      ctx.fillText((0, _format_axis_tick2.default)(axis), this.vp.size.w + 5, slotY + slotHeight - axisY + 3);
     }
   }
 
@@ -532,15 +571,10 @@ export default class BitfinexTradingChart {
     const color = indicator[2][0];
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-
-    const maxP = _max(candlesToRender.map(ohlc => ohlc[3]));
-
-    const minP = _min(candlesToRender.map(ohlc => ohlc[4]));
-
+    const maxP = (0, _max3.default)(candlesToRender.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candlesToRender.map(ohlc => ohlc[4]));
     const pd = maxP - minP;
     const linePoints = [];
 
@@ -555,22 +589,17 @@ export default class BitfinexTradingChart {
       });
     }
 
-    drawLine(this.ohlcCanvas, color, linePoints);
+    (0, _line2.default)(this.ohlcCanvas, color, linePoints);
   }
 
   renderOverlayLinesIndicator(indicator, data, slot) {
     const colors = indicator[2];
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-
-    const maxP = _max(candlesToRender.map(ohlc => ohlc[3]));
-
-    const minP = _min(candlesToRender.map(ohlc => ohlc[4]));
-
+    const maxP = (0, _max3.default)(candlesToRender.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candlesToRender.map(ohlc => ohlc[4]));
     const pd = maxP - minP;
 
     for (let i = 0; i < indicator[0].ui.lines.length; i += 1) {
@@ -588,7 +617,7 @@ export default class BitfinexTradingChart {
         });
       }
 
-      drawLine(this.ohlcCanvas, colors[i], linePoints);
+      (0, _line2.default)(this.ohlcCanvas, colors[i], linePoints);
     }
   }
   /**
@@ -602,14 +631,14 @@ export default class BitfinexTradingChart {
       height,
       mousePosition
     } = this;
-    drawLine(this.crosshairCanvas, CONFIG.CROSSHAIR_COLOR, [{
+    (0, _line2.default)(this.crosshairCanvas, _config2.default.CROSSHAIR_COLOR, [{
       x: 0,
       y: mousePosition.y + 0.5
     }, {
       x: width,
       y: mousePosition.y + 0.5
     }]);
-    drawLine(this.crosshairCanvas, CONFIG.CROSSHAIR_COLOR, [{
+    (0, _line2.default)(this.crosshairCanvas, _config2.default.CROSSHAIR_COLOR, [{
       x: mousePosition.x + 0.5,
       y: 0
     }, {
@@ -623,19 +652,16 @@ export default class BitfinexTradingChart {
       return;
     }
 
-    const maxP = _max(candlesInView.map(ohlc => ohlc[3]));
-
-    const minP = _min(candlesInView.map(ohlc => ohlc[4]));
-
-    const rightMTS = _last(candlesInView)[0];
-
+    const maxP = (0, _max3.default)(candlesInView.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candlesInView.map(ohlc => ohlc[4]));
+    const rightMTS = (0, _last3.default)(candlesInView)[0];
     const leftMTS = candlesInView[0][0];
     const mtsPerPX = (rightMTS - leftMTS) / this.vp.size.w;
     const pricePerPX = (maxP - minP) / this.getOHLCVPHeight();
     const mouseMTS = Math.floor(leftMTS + mtsPerPX * mousePosition.x);
     const mousePrice = maxP - pricePerPX * mousePosition.y;
     const labelX = new Date(mouseMTS).toLocaleString();
-    const labelY = formatAxisTick(mousePrice);
+    const labelY = (0, _format_axis_tick2.default)(mousePrice);
     const labelXWidth = ctx.measureText(labelX).width;
     const labelYWidth = ctx.measureText(labelY).width;
     ctx.textAlign = 'center';
@@ -675,11 +701,8 @@ export default class BitfinexTradingChart {
     }
 
     const candles = this.getCandlesInView();
-
-    const maxP = _max(candles.map(ohlc => ohlc[3]));
-
-    const minP = _min(candles.map(ohlc => ohlc[4]));
-
+    const maxP = (0, _max3.default)(candles.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candles.map(ohlc => ohlc[4]));
     const visibleOrders = this.orders.filter(({
       price
     }) => price >= minP && price <= maxP);
@@ -691,19 +714,19 @@ export default class BitfinexTradingChart {
     const ctx = this.drawingCanvas.getContext('2d');
     const transformer = this.getOHLCTransformer();
     visibleOrders.forEach(o => {
-      const color = o.amount < 0 ? CONFIG.FALLING_CANDLE_FILL : CONFIG.RISING_CANDLE_FILL;
-      const label = `${formatAxisTick(o.amount)} @ ${formatAxisTick(o.price)}`;
+      const color = o.amount < 0 ? _config2.default.FALLING_CANDLE_FILL : _config2.default.RISING_CANDLE_FILL;
+      const label = `${(0, _format_axis_tick2.default)(o.amount)} @ ${(0, _format_axis_tick2.default)(o.price)}`;
       const labelWidth = ctx.measureText(label).width;
       const y = transformer.y(o.price);
-      const labelX = this.vp.size.w - CONFIG.MARGIN_RIGHT * 0.5 - labelWidth;
-      drawLine(this.drawingCanvas, color, [{
+      const labelX = this.vp.size.w - _config2.default.MARGIN_RIGHT * 0.5 - labelWidth;
+      (0, _line2.default)(this.drawingCanvas, color, [{
         x: 0,
         y
       }, {
         x: this.vp.size.w,
         y
       }], true);
-      ctx.font = `${CONFIG.AXIS_LABEL_FONT_SIZE_PX} ${CONFIG.AXIS_LABEL_FONT_NAME}`;
+      ctx.font = `${_config2.default.AXIS_LABEL_FONT_SIZE_PX} ${_config2.default.AXIS_LABEL_FONT_NAME}`;
       ctx.textAlign = 'left';
       ctx.fillStyle = color;
       ctx.fillRect(labelX, y - 8, labelWidth + 16, 16);
@@ -718,11 +741,8 @@ export default class BitfinexTradingChart {
     }
 
     const candles = this.getCandlesInView();
-
-    const maxP = _max(candles.map(ohlc => ohlc[3]));
-
-    const minP = _min(candles.map(ohlc => ohlc[4]));
-
+    const maxP = (0, _max3.default)(candles.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candles.map(ohlc => ohlc[4]));
     const {
       basePrice,
       amount
@@ -734,19 +754,19 @@ export default class BitfinexTradingChart {
 
     const ctx = this.drawingCanvas.getContext('2d');
     const transformer = this.getOHLCTransformer();
-    const color = amount < 0 ? CONFIG.FALLING_CANDLE_FILL : CONFIG.RISING_CANDLE_FILL;
-    const label = `${formatAxisTick(amount)} @ ${formatAxisTick(basePrice)}`;
+    const color = amount < 0 ? _config2.default.FALLING_CANDLE_FILL : _config2.default.RISING_CANDLE_FILL;
+    const label = `${(0, _format_axis_tick2.default)(amount)} @ ${(0, _format_axis_tick2.default)(basePrice)}`;
     const labelWidth = ctx.measureText(label).width;
     const y = transformer.y(basePrice);
-    const labelX = this.vp.size.w - CONFIG.MARGIN_RIGHT * 0.5 - labelWidth;
-    drawLine(this.drawingCanvas, color, [{
+    const labelX = this.vp.size.w - _config2.default.MARGIN_RIGHT * 0.5 - labelWidth;
+    (0, _line2.default)(this.drawingCanvas, color, [{
       x: 0,
       y
     }, {
       x: this.vp.size.w,
       y
     }]);
-    ctx.font = `${CONFIG.AXIS_LABEL_FONT_SIZE_PX} ${CONFIG.AXIS_LABEL_FONT_NAME}`;
+    ctx.font = `${_config2.default.AXIS_LABEL_FONT_SIZE_PX} ${_config2.default.AXIS_LABEL_FONT_NAME}`;
     ctx.textAlign = 'left';
     ctx.fillStyle = color;
     ctx.fillRect(labelX, y - 8, labelWidth + 16, 16);
@@ -756,9 +776,7 @@ export default class BitfinexTradingChart {
 
   getMTSForRawX(x) {
     const candlesInView = this.getCandlesInView();
-
-    const rightMTS = _last(candlesInView)[0];
-
+    const rightMTS = (0, _last3.default)(candlesInView)[0];
     const leftMTS = candlesInView[0][0];
     const mtsPerPX = (rightMTS - leftMTS) / this.vp.size.w;
     return leftMTS + mtsPerPX * x;
@@ -767,11 +785,8 @@ export default class BitfinexTradingChart {
   getPriceForRawY(y) {
     const candlesInView = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
-
-    const high = _max(candlesInView.map(c => c[3]));
-
-    const low = _min(candlesInView.map(c => c[4]));
-
+    const high = (0, _max3.default)(candlesInView.map(c => c[3]));
+    const low = (0, _min3.default)(candlesInView.map(c => c[4]));
     const pricePerPX = (high - low) / vpHeight;
     return high - pricePerPX * y;
   }
@@ -779,16 +794,11 @@ export default class BitfinexTradingChart {
   getOHLCTransformer() {
     const candlesToRender = this.getCandlesInView();
     const vpHeight = this.getOHLCVPHeight();
-
-    const rightMTS = _last(candlesToRender)[0];
-
+    const rightMTS = (0, _last3.default)(candlesToRender)[0];
     const vWidth = this.viewportWidthCandles * this.dataWidth;
-
-    const maxP = _max(candlesToRender.map(ohlc => ohlc[3]));
-
-    const minP = _min(candlesToRender.map(ohlc => ohlc[4]));
-
-    const transformer = dataTransformer([maxP, minP], vWidth, rightMTS);
+    const maxP = (0, _max3.default)(candlesToRender.map(ohlc => ohlc[3]));
+    const minP = (0, _min3.default)(candlesToRender.map(ohlc => ohlc[4]));
+    const transformer = (0, _data_transformer2.default)([maxP, minP], vWidth, rightMTS);
     transformer.setTargetWidth(this.vp.size.w);
     transformer.setTargetHeight(vpHeight);
     transformer.setYModifier(y => vpHeight - y);
@@ -796,7 +806,7 @@ export default class BitfinexTradingChart {
   }
 
   drawHorizontalVPLine(canvas, color, y) {
-    drawLine(canvas, color, [{
+    (0, _line2.default)(canvas, color, [{
       x: 0,
       y
     }, {
@@ -814,12 +824,12 @@ export default class BitfinexTradingChart {
 
     const vpWidth = this.viewportWidthCandles * this.dataWidth;
     const vpHeight = this.getOHLCVPHeight();
-    drawXAxis(this.axisCanvas, candles, vpHeight, vpWidth, this.vp.size.w);
-    drawYAxis(this.axisCanvas, candles, this.vp.size.w, this.height, vpHeight);
+    (0, _x_axis2.default)(this.axisCanvas, candles, vpHeight, vpWidth, this.vp.size.w);
+    (0, _y_axis2.default)(this.axisCanvas, candles, this.vp.size.w, this.height, vpHeight);
   }
 
   getOHLCVPHeight() {
-    return this.vp.size.h - _min([this.vp.size.h / 2, this.externalIndicators * 100]);
+    return this.vp.size.h - (0, _min3.default)([this.vp.size.h / 2, this.externalIndicators * 100]);
   }
 
   renderHoveredOHLC() {
@@ -828,14 +838,14 @@ export default class BitfinexTradingChart {
     }
 
     const ctx = this.crosshairCanvas.getContext('2d');
-    let x = CONFIG.OHLC_LABEL_POSITION_X;
-    let y = CONFIG.OHLC_LABEL_POSITION_Y;
-    ctx.font = `${CONFIG.OHLC_LABEL_FONT_SIZE_PX} ${CONFIG.OHLC_LABEL_FONT_NAME}`;
+    let x = _config2.default.OHLC_LABEL_POSITION_X;
+    let y = _config2.default.OHLC_LABEL_POSITION_Y;
+    ctx.font = `${_config2.default.OHLC_LABEL_FONT_SIZE_PX} ${_config2.default.OHLC_LABEL_FONT_NAME}`;
     ctx.textAlign = 'left';
-    const o = formatAxisTick(this.lastHoveredCandle[1]);
-    const h = formatAxisTick(this.lastHoveredCandle[3]);
-    const l = formatAxisTick(this.lastHoveredCandle[4]);
-    const c = formatAxisTick(this.lastHoveredCandle[2]);
+    const o = (0, _format_axis_tick2.default)(this.lastHoveredCandle[1]);
+    const h = (0, _format_axis_tick2.default)(this.lastHoveredCandle[3]);
+    const l = (0, _format_axis_tick2.default)(this.lastHoveredCandle[4]);
+    const c = (0, _format_axis_tick2.default)(this.lastHoveredCandle[2]);
     const oWidth = ctx.measureText('O:').width;
     const hWidth = ctx.measureText('H:').width;
     const lWidth = ctx.measureText('L:').width;
@@ -843,25 +853,25 @@ export default class BitfinexTradingChart {
     const oVWidth = ctx.measureText(o).width;
     const hVWidth = ctx.measureText(h).width;
     const lVWidth = ctx.measureText(l).width;
-    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_COLOR;
     ctx.fillText('O:', x, y);
-    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
-    ctx.fillText(o, x + oWidth + CONFIG.OHLC_LABEL_SPACING, y);
-    x = x + oWidth + CONFIG.OHLC_LABEL_SPACING * 2 + oVWidth;
-    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(o, x + oWidth + _config2.default.OHLC_LABEL_SPACING, y);
+    x = x + oWidth + _config2.default.OHLC_LABEL_SPACING * 2 + oVWidth;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_COLOR;
     ctx.fillText('H:', x, y);
-    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
-    ctx.fillText(h, x + hWidth + CONFIG.OHLC_LABEL_SPACING, y);
-    x = x + hWidth + CONFIG.OHLC_LABEL_SPACING * 2 + hVWidth;
-    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(h, x + hWidth + _config2.default.OHLC_LABEL_SPACING, y);
+    x = x + hWidth + _config2.default.OHLC_LABEL_SPACING * 2 + hVWidth;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_COLOR;
     ctx.fillText('L:', x, y);
-    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
-    ctx.fillText(l, x + lWidth + CONFIG.OHLC_LABEL_SPACING, y);
-    x = x + lWidth + CONFIG.OHLC_LABEL_SPACING * 2 + lVWidth;
-    ctx.fillStyle = CONFIG.OHLC_LABEL_COLOR;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(l, x + lWidth + _config2.default.OHLC_LABEL_SPACING, y);
+    x = x + lWidth + _config2.default.OHLC_LABEL_SPACING * 2 + lVWidth;
+    ctx.fillStyle = _config2.default.OHLC_LABEL_COLOR;
     ctx.fillText('C:', x, y);
-    ctx.fillStyle = CONFIG.OHLC_LABEL_VALUE_COLOR;
-    ctx.fillText(c, x + cWidth + CONFIG.OHLC_LABEL_SPACING, y);
+    ctx.fillStyle = _config2.default.OHLC_LABEL_VALUE_COLOR;
+    ctx.fillText(c, x + cWidth + _config2.default.OHLC_LABEL_SPACING, y);
   }
 
   renderOHLC() {
@@ -874,7 +884,7 @@ export default class BitfinexTradingChart {
 
     const vpHeight = this.getOHLCVPHeight();
     const vpWidth = this.viewportWidthCandles * this.dataWidth;
-    drawOHLCSeries(ctx, candles, this.candleWidthPX, vpWidth, vpHeight, this.vp.size.w);
+    (0, _ohlc_series2.default)(ctx, candles, this.candleWidthPX, vpWidth, vpHeight, this.vp.size.w);
   }
 
   renderTrades() {
@@ -886,9 +896,9 @@ export default class BitfinexTradingChart {
     const transformer = this.getOHLCTransformer();
 
     for (let i = 0; i < this.trades.length; i += 1) {
-      ctx.strokeStyle = this.trades[i].amount > 0 ? CONFIG.TRADE_MARKER_BUY_COLOR : CONFIG.TRADE_MARKER_SELL_COLOR;
+      ctx.strokeStyle = this.trades[i].amount > 0 ? _config2.default.TRADE_MARKER_BUY_COLOR : _config2.default.TRADE_MARKER_SELL_COLOR;
       ctx.beginPath();
-      ctx.arc(transformer.x(this.trades[i].mts), transformer.y(this.trades[i].price), CONFIG.TRADE_MARKER_RADIUS_PX, 0, 2 * Math.PI);
+      ctx.arc(transformer.x(this.trades[i].mts), transformer.y(this.trades[i].price), _config2.default.TRADE_MARKER_RADIUS_PX, 0, 2 * Math.PI);
       ctx.stroke();
     }
   }
@@ -954,7 +964,7 @@ export default class BitfinexTradingChart {
       this.clearAll();
       this.renderAll();
 
-      if (_isFunction(this.onLoadMoreCB)) {
+      if ((0, _isFunction3.default)(this.onLoadMoreCB)) {
         const panX = this.vp.pan.x + this.vp.origin.x;
         const candlePanOffset = panX > 0 ? Math.floor(panX / this.candleWidthPX) : 0;
 
@@ -975,11 +985,11 @@ export default class BitfinexTradingChart {
 
   onMouseWheel(dx, dy, dz, ev) {
     // differing values in Chrome/FF, normalize
-    const delta = dy < 0 ? -CONFIG.ZOOM_CANDLE_STEP : CONFIG.ZOOM_CANDLE_STEP;
+    const delta = dy < 0 ? -_config2.default.ZOOM_CANDLE_STEP : _config2.default.ZOOM_CANDLE_STEP;
     this.viewportWidthCandles += delta;
 
-    if (this.viewportWidthCandles < CONFIG.ZOOM_MIN_LIMIT_CANDLES) {
-      this.viewportWidthCandles = CONFIG.ZOOM_MIN_LIMIT_CANDLES;
+    if (this.viewportWidthCandles < _config2.default.ZOOM_MIN_LIMIT_CANDLES) {
+      this.viewportWidthCandles = _config2.default.ZOOM_MIN_LIMIT_CANDLES;
     }
 
     this.candleWidthPX = Math.max(1, 7 - Math.floor(this.viewportWidthCandles / 50));
@@ -990,3 +1000,5 @@ export default class BitfinexTradingChart {
   }
 
 }
+
+exports.default = BitfinexTradingChart;

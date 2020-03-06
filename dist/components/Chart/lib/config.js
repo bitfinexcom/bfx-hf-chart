@@ -1,3 +1,8 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 const CONFIG = {
   AXIS_COLOR: '#333',
   AXIS_TICK_COLOR: '#222',
@@ -34,5 +39,5 @@ const set = (key, value) => {
   CONFIG[key] = value;
 };
 
-export default CONFIG;
-export { set };
+exports.default = CONFIG;
+exports.set = set;

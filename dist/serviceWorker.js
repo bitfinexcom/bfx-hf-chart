@@ -1,3 +1,10 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.register = register;
+exports.unregister = unregister;
 // This optional code is used to register a service worker.
 // register() is not called by default.
 // This lets the app load faster on subsequent visits in production, and gives
@@ -10,7 +17,8 @@
 const isLocalhost = Boolean(window.location.hostname === 'localhost' || // [::1] is the IPv6 localhost address.
 window.location.hostname === '[::1]' || // 127.0.0.0/8 are considered localhost for IPv4.
 window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
-export function register(config) {
+
+function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
@@ -105,7 +113,7 @@ function checkValidServiceWorker(swUrl, config) {
   });
 }
 
-export function unregister() {
+function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();

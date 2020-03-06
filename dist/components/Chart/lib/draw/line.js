@@ -1,3 +1,10 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = drawLine;
+
 /**
  * Draw a line composed of multiple points
  *
@@ -6,7 +13,7 @@
  * @param {Object[]} points - array of { x, y } points
  * @param {boolean?} dashed
  */
-export default function drawLine(canvas, style, points = [], dashed) {
+function drawLine(canvas, style, points = [], dashed) {
   const ctx = canvas.getContext('2d');
   ctx.strokeStyle = style;
 
