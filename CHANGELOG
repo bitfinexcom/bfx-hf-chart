@@ -1,5 +1,9 @@
+# 1.0.4
+- fix: transform commonjs modules in babel config
+
 # 1.0.3
 - feature: add ability to insert extra header components to left/right
+
 # 1.0.2
 - refactor: move OHLC label onto crosshair canvas
 - refactor: convert timeframe menu to dropdown

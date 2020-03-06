@@ -1,6 +1,6 @@
 {
   "name": "bfx-hf-chart",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "HF Financial Charting Library",
   "main": "dist/components/Chart/Chart.js",
   "author": "Bitfinex",
