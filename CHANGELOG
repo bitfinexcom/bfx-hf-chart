@@ -1,3 +1,7 @@
+# 1.0.5
+- fix: add missing babel-eslint dep needed for external builds to succeed
+- meta: bump react-scripts
+
 # 1.0.4
 - fix: transform commonjs modules in babel config
 
