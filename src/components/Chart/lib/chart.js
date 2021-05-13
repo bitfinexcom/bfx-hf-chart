@@ -203,7 +203,7 @@ export default class BitfinexTradingChart {
 
         const v = ind.v()
         let nullP = 0
-        
+
         if (indicatorInstances[j][1].ui.lines) {
           nullP = {}
           indicatorInstances[j][1].ui.lines.forEach(key => nullP[key] = 0)
@@ -342,7 +342,7 @@ export default class BitfinexTradingChart {
     }
   }
 
-  renderBBandsIndicator (indicator, data, slot) {
+  renderBBandsIndicator (indicator, data) {
     const colors = indicator[2]
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
@@ -525,7 +525,7 @@ export default class BitfinexTradingChart {
     }
   }
 
-  renderOverlayLineIndicator (indicator, data, slot) {
+  renderOverlayLineIndicator (indicator, data) {
     const color = indicator[2][0]
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
@@ -548,7 +548,7 @@ export default class BitfinexTradingChart {
     drawLine(this.ohlcCanvas, color, linePoints)
   }
 
-  renderOverlayLinesIndicator (indicator, data, slot) {
+  renderOverlayLinesIndicator (indicator, data) {
     const colors = indicator[2]
     const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
@@ -891,7 +891,7 @@ export default class BitfinexTradingChart {
     this.isDragging = false
   }
 
-  onMouseUp (e) {
+  onMouseUp () {
     this.isDragging = false
     this.dragStart = null
 
