@@ -27,7 +27,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.12.0",
     "react-onclickoutside": "^6.9.0",
-    "react-scripts": "3.4.4"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "cra-build": "react-scripts build",
