@@ -52,7 +52,7 @@ export default class Drawing {
     this.anchors.forEach(a => a.moving = false)
   }
 
-  onMouseDown (x, y) {
+  onMouseDown () {
     let hasMovingAnchor = false
 
     this.anchors.forEach((a) => {

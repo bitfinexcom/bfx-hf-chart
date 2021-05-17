@@ -59,7 +59,7 @@ export default class IndicatorSettingsModal extends React.PureComponent {
 
           <ul className='bfxc__indicatorsettingsmodal-settings'>
             {args.map((arg, i) => (
-              <li>
+              <li key={i}>
                 <p>{argsDef[i].label}</p>
 
                 <input
