@@ -60,3 +60,17 @@ const data = [[
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+### Note
+
+This package will be maintained only via github, please use latest relases from github instead of npm.
+
+Example on how to install specific version from github:
+```
+npm i --save-prod https://github.com/bitfinexcom/bfx-hf-chart.git#v1.0.7
+```
+
+Example on how to install it latest version from github:
+```
+npm i --save-prod https://github.com/bitfinexcom/bfx-hf-chart.git
+```
