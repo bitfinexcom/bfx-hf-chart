@@ -14,7 +14,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "bfx-api-node-models": "^1.1.2",
+    "bfx-api-node-models": "^1.4.1",
     "bfx-hf-indicators": "github:bitfinexcom/bfx-hf-indicators#v2.0.9",
     "bfx-hf-util": "github:bitfinexcom/bfx-hf-util#v1.0.12",
     "classnames": "^2.2.6",
