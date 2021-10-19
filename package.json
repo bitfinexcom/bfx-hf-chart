@@ -15,7 +15,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bfx-api-node-models": "^1.4.1",
-    "bfx-hf-indicators": "github:bitfinexcom/bfx-hf-indicators#v2.0.9",
+    "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
     "bfx-hf-util": "github:bitfinexcom/bfx-hf-util#v1.0.12",
     "classnames": "^2.2.6",
     "gh-pages": "^2.2.0",
