@@ -1,6 +1,7 @@
 import _isFunction from 'lodash/isFunction'
 import _isFinite from 'lodash/isFinite'
 import _isObject from 'lodash/isObject'
+import _isEmpty from 'lodash/isEmpty'
 import _last from 'lodash/last'
 import _max from 'lodash/max'
 import _min from 'lodash/min'
@@ -343,8 +344,12 @@ export default class BitfinexTradingChart {
   }
 
   renderBBandsIndicator (indicator, data) {
-    const colors = indicator[2]
     const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
+    const colors = indicator[2]
     const vpHeight = this.getOHLCVPHeight()
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
@@ -375,9 +380,13 @@ export default class BitfinexTradingChart {
   }
 
   renderRSIIndicator (indicator, data, exSlot) {
+    const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
     const color = indicator[2][0]
     const iInstance = new indicator[0](indicator[1])
-    const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
     const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
@@ -400,9 +409,13 @@ export default class BitfinexTradingChart {
   }
 
   renderMACDIndicator (indicator, data, exSlot) {
+    const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
     const colors = indicator[2]
     const iInstance = new indicator[0](indicator[1])
-    const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
     const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
@@ -452,9 +465,13 @@ export default class BitfinexTradingChart {
   }
 
   renderExternalLineIndicator (indicator, data, exSlot) {
+    const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
     const color = indicator[2][0]
     const iInstance = new indicator[0](indicator[1])
-    const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
     const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
@@ -477,9 +494,13 @@ export default class BitfinexTradingChart {
   }
 
   renderExternalLinesIndicator (indicator, data, exSlot) {
+    const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
     const colors = indicator[2]
     const iInstance = new indicator[0](indicator[1])
-    const candlesToRender = this.getCandlesInView()
     const vpHeight = this.getOHLCVPHeight()
     const slotHeight = (this.vp.size.h - vpHeight) / this.externalIndicators
     const slotY = vpHeight + (slotHeight * exSlot) + CONFIG.AXIS_MARGIN_BOTTOM
@@ -526,8 +547,12 @@ export default class BitfinexTradingChart {
   }
 
   renderOverlayLineIndicator (indicator, data) {
-    const color = indicator[2][0]
     const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
+    const color = indicator[2][0]
     const vpHeight = this.getOHLCVPHeight()
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
@@ -549,8 +574,12 @@ export default class BitfinexTradingChart {
   }
 
   renderOverlayLinesIndicator (indicator, data) {
-    const colors = indicator[2]
     const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
+    const colors = indicator[2]
     const vpHeight = this.getOHLCVPHeight()
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
@@ -748,6 +777,10 @@ export default class BitfinexTradingChart {
 
   getOHLCTransformer () {
     const candlesToRender = this.getCandlesInView()
+    if (_isEmpty(candlesToRender)) {
+      return
+    }
+
     const vpHeight = this.getOHLCVPHeight()
     const rightMTS = _last(candlesToRender)[0]
     const vWidth = this.viewportWidthCandles * this.dataWidth
