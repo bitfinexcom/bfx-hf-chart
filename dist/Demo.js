@@ -125,12 +125,12 @@ class Demo extends _react2.default.PureComponent {
       drawings,
       indicators
     } = this.state;
-    return _react2.default.createElement("div", {
+    return /*#__PURE__*/_react2.default.createElement("div", {
       id: "bitfinex-chart-demo__bfxc"
-    }, _react2.default.createElement(_reactVirtualized.AutoSizer, null, ({
+    }, /*#__PURE__*/_react2.default.createElement(_reactVirtualized.AutoSizer, null, ({
       width,
       height
-    }) => _react2.default.createElement(_Chart2.default, {
+    }) => /*#__PURE__*/_react2.default.createElement(_Chart2.default, {
       ref: this.chartRef,
       indicators: indicators,
       drawings: drawings,
