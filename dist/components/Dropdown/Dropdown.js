@@ -55,17 +55,17 @@ class Dropdown extends _react2.default.Component {
     const {
       open
     } = this.state;
-    return _react2.default.createElement("div", {
+    return /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__dropdown-wrapper"
-    }, _react2.default.createElement("p", {
+    }, /*#__PURE__*/_react2.default.createElement("p", {
       onClick: this.onToggle
-    }, label), open && _react2.default.createElement("div", {
+    }, label), open && /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__dropdown-menu"
-    }, _react2.default.createElement(_reactCustomScrollbars.Scrollbars, {
+    }, /*#__PURE__*/_react2.default.createElement(_reactCustomScrollbars.Scrollbars, {
       renderThumbVertical: ({
         style,
         ...props
-      }) => _react2.default.createElement("div", _extends({
+      }) => /*#__PURE__*/_react2.default.createElement("div", _extends({
         style: { ...style,
           backgroundColor: '#333'
         }

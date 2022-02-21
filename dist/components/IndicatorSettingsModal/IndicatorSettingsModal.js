@@ -78,26 +78,28 @@ class IndicatorSettingsModal extends _react2.default.PureComponent {
       argsDef,
       args = []
     } = settings;
-    return _react2.default.createElement("div", {
+    return /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__indicatorsettingsmodal-outer"
-    }, _react2.default.createElement("div", {
+    }, /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__indicatorsettingsmodal-wrapper"
-    }, _react2.default.createElement("p", {
+    }, /*#__PURE__*/_react2.default.createElement("p", {
       className: "bfxc__indicatorsettingsmodal-title"
-    }, name, " Settings"), _react2.default.createElement("ul", {
+    }, name, " Settings"), /*#__PURE__*/_react2.default.createElement("ul", {
       className: "bfxc__indicatorsettingsmodal-settings"
-    }, args.map((arg, i) => _react2.default.createElement("li", null, _react2.default.createElement("p", null, argsDef[i].label), _react2.default.createElement("input", {
+    }, args.map((arg, i) => /*#__PURE__*/_react2.default.createElement("li", {
+      key: i
+    }, /*#__PURE__*/_react2.default.createElement("p", null, argsDef[i].label), /*#__PURE__*/_react2.default.createElement("input", {
       type: "text",
       value: values[i],
       onChange: e => this.onValueChange(i, e.target.value)
-    })))), _react2.default.createElement("ul", {
+    })))), /*#__PURE__*/_react2.default.createElement("ul", {
       className: "bfxc__indicatorsettingsmodal-actions"
-    }, _react2.default.createElement("li", null, _react2.default.createElement("button", {
+    }, /*#__PURE__*/_react2.default.createElement("li", null, /*#__PURE__*/_react2.default.createElement("button", {
       onClick: onClose
-    }, "Close")), _react2.default.createElement("li", null, _react2.default.createElement("button", {
+    }, "Close")), /*#__PURE__*/_react2.default.createElement("li", null, /*#__PURE__*/_react2.default.createElement("button", {
       onClick: onDelete,
       className: "red"
-    }, "Delete")), _react2.default.createElement("li", null, _react2.default.createElement("button", {
+    }, "Delete")), /*#__PURE__*/_react2.default.createElement("li", null, /*#__PURE__*/_react2.default.createElement("button", {
       onClick: this.onSave,
       className: "green"
     }, "Save")))));

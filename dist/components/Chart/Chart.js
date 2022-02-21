@@ -423,14 +423,14 @@ class Chart extends _react2.default.Component {
     const canvasStyle = {
       top: `${topReservedSpace}px`
     };
-    return _react2.default.createElement("div", {
+    return /*#__PURE__*/_react2.default.createElement("div", {
       ref: this.wrapperRef,
       className: "bfxc__wrapper",
       style: {
         width: `${width}px`,
         height: `${height}px`
       }
-    }, _react2.default.createElement("div", {
+    }, /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__bg",
       style: {
         width,
@@ -438,88 +438,88 @@ class Chart extends _react2.default.Component {
         background: bgColor,
         top: `${topReservedSpace}px`
       }
-    }), !disableTopbar && _react2.default.createElement("div", {
+    }), !disableTopbar && /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__topbar"
-    }, extraHeaderComponentsLeft, showMarketLabel && _react2.default.createElement("p", {
+    }, extraHeaderComponentsLeft, showMarketLabel && /*#__PURE__*/_react2.default.createElement("p", {
       className: "bfxcs__topbar-market"
-    }, marketLabel), _react2.default.createElement("div", {
+    }, marketLabel), /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxcs__topbar-tfs bfxcs__topbar-section"
-    }, _react2.default.createElement(_Dropdown2.default, {
-      label: _react2.default.createElement("span", null, candleWidth, _react2.default.createElement("i", {
+    }, /*#__PURE__*/_react2.default.createElement(_Dropdown2.default, {
+      label: /*#__PURE__*/_react2.default.createElement("span", null, candleWidth, /*#__PURE__*/_react2.default.createElement("i", {
         className: "icon-chevron-down-passive"
       }))
-    }, _react2.default.createElement("ul", null, Object.keys(_bfxHfUtil.TIME_FRAME_WIDTHS).map(tf => _react2.default.createElement("li", {
+    }, /*#__PURE__*/_react2.default.createElement("ul", null, Object.keys(_bfxHfUtil.TIME_FRAME_WIDTHS).map(tf => /*#__PURE__*/_react2.default.createElement("li", {
       key: tf,
       onClick: () => onTimeFrameChange && onTimeFrameChange(tf)
-    }, tf))))), !disableIndicators && _react2.default.createElement("div", {
+    }, tf))))), !disableIndicators && /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__topbar-indicators bfxcs__topbar-section"
-    }, _react2.default.createElement(_Dropdown2.default, {
-      label: _react2.default.createElement("span", null, _react2.default.createElement("i", {
+    }, /*#__PURE__*/_react2.default.createElement(_Dropdown2.default, {
+      label: /*#__PURE__*/_react2.default.createElement("span", null, /*#__PURE__*/_react2.default.createElement("i", {
         className: "icon-indicators"
-      }), "Indicators", _react2.default.createElement("i", {
+      }), "Indicators", /*#__PURE__*/_react2.default.createElement("i", {
         className: "icon-chevron-down-passive"
       }))
-    }, _react2.default.createElement("ul", null, Object.values(_bfxHfIndicators2.default).filter(i => !!i.label).map(i => _react2.default.createElement("li", {
+    }, /*#__PURE__*/_react2.default.createElement("ul", null, Object.values(_bfxHfIndicators2.default).filter(i => !!i.label).map(i => /*#__PURE__*/_react2.default.createElement("li", {
       key: i.id,
       onClick: () => this.onAddIndicator(i)
-    }, i.humanLabel))))), _react2.default.createElement("div", {
+    }, i.humanLabel))))), /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxcs__topbar-fullscreen"
-    }, _react2.default.createElement("i", {
+    }, /*#__PURE__*/_react2.default.createElement("i", {
       className: "icon-move",
       onClick: this.onToggleFullscreen
-    })), isSyncing && _react2.default.createElement("div", {
+    })), isSyncing && /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxc__topbar-spinner"
-    }), extraHeaderComponentsRight), !disableToolbar && _react2.default.createElement("ul", {
+    }), extraHeaderComponentsRight), !disableToolbar && /*#__PURE__*/_react2.default.createElement("ul", {
       className: "bfxc__toolbar"
-    }, _react2.default.createElement("li", {
+    }, /*#__PURE__*/_react2.default.createElement("li", {
       onClick: () => onAddDrawing && onAddDrawing(_line2.default)
-    }, "Line"), _react2.default.createElement("li", {
+    }, "Line"), /*#__PURE__*/_react2.default.createElement("li", {
       onClick: () => onAddDrawing && onAddDrawing(_horizontal_line2.default)
-    }, "HLine"), _react2.default.createElement("li", {
+    }, "HLine"), /*#__PURE__*/_react2.default.createElement("li", {
       onClick: () => onAddDrawing && onAddDrawing(_vertical_line2.default)
-    }, "VLine"), _react2.default.createElement("li", {
+    }, "VLine"), /*#__PURE__*/_react2.default.createElement("li", {
       onClick: () => onAddDrawing && onAddDrawing(_parallel_lines2.default)
-    }, "PLines")), _react2.default.createElement("canvas", {
+    }, "PLines")), /*#__PURE__*/_react2.default.createElement("canvas", {
       width: width,
       height: renderHeight,
       ref: this.axisCanvasRef,
       style: canvasStyle
-    }), _react2.default.createElement("canvas", {
+    }), /*#__PURE__*/_react2.default.createElement("canvas", {
       width: width,
       height: renderHeight,
       ref: this.ohlcCanvasRef,
       style: canvasStyle
-    }), _react2.default.createElement("canvas", {
+    }), /*#__PURE__*/_react2.default.createElement("canvas", {
       width: width,
       height: renderHeight,
       ref: this.indicatorCanvasRef,
       style: canvasStyle
-    }), _react2.default.createElement("canvas", {
+    }), /*#__PURE__*/_react2.default.createElement("canvas", {
       width: width,
       height: renderHeight,
       ref: this.drawingCanvasRef,
       style: canvasStyle
-    }), _react2.default.createElement("canvas", {
+    }), /*#__PURE__*/_react2.default.createElement("canvas", {
       width: width,
       height: renderHeight,
       ref: this.crosshairCanvasRef,
       style: canvasStyle
-    }), candles.length > candleLoadingThreshold && indicatorSettings.length > 0 && _react2.default.createElement("ul", {
+    }), candles.length > candleLoadingThreshold && indicatorSettings.length > 0 && /*#__PURE__*/_react2.default.createElement("ul", {
       className: "bfxc__overlaysettings-wrapper"
-    }, indicatorSettings.map((settings, i) => _react2.default.createElement("li", {
+    }, indicatorSettings.map((settings, i) => /*#__PURE__*/_react2.default.createElement("li", {
       key: i,
       style: {
         borderColor: `${settings.colors[0]}99`,
         bottom: `${settings.bottom}px`,
         left: 32
       }
-    }, _react2.default.createElement("p", null, settings.name), _react2.default.createElement("i", {
+    }, /*#__PURE__*/_react2.default.createElement("p", null, settings.name), /*#__PURE__*/_react2.default.createElement("i", {
       className: "icon-settings",
       onClick: () => this.onOpenIndicatorSettings(i)
-    }), _react2.default.createElement("i", {
+    }), /*#__PURE__*/_react2.default.createElement("i", {
       className: "icon-delete",
       onClick: () => onDeleteIndicator(i)
-    })))), settingsModalOpen && _react2.default.createElement(_IndicatorSettingsModal2.default, {
+    })))), settingsModalOpen && /*#__PURE__*/_react2.default.createElement(_IndicatorSettingsModal2.default, {
       settings: indicatorSettings[settingsModalIndicatorIndex],
       onClose: this.onCloseIndicatorSettings,
       onSave: this.onSaveIndicatorSettings,
@@ -527,7 +527,7 @@ class Chart extends _react2.default.Component {
         onDeleteIndicator(settingsModalIndicatorIndex);
         this.onCloseIndicatorSettings();
       }
-    }), candles.length <= candleLoadingThreshold && _react2.default.createElement(_LoadingBeeSpinner2.default, {
+    }), candles.length <= candleLoadingThreshold && /*#__PURE__*/_react2.default.createElement(_LoadingBeeSpinner2.default, {
       top: this.getTopReservedSpace()
     }));
   }
