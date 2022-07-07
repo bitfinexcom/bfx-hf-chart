@@ -1,6 +1,6 @@
 {
   "name": "bfx-hf-chart",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "HF Financial Charting Library",
   "main": "dist/components/Chart/Chart.js",
   "author": "Bitfinex",
@@ -16,7 +16,7 @@
     "@testing-library/user-event": "^7.1.2",
     "bfx-api-node-models": "^1.4.1",
     "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
-    "bfx-hf-util": "github:bitfinexcom/bfx-hf-util#v1.0.12",
+    "bfx-hf-util": "git+https://github.com/bitfinexcom/bfx-hf-util.git#v1.0.12",
     "classnames": "^2.2.6",
     "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
