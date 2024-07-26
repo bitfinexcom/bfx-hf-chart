@@ -1,3 +1,4 @@
+import _isFinite from 'lodash/isFinite'
 import React from 'react'
 import { TIME_FRAME_WIDTHS } from 'bfx-hf-util'
 import HFI from 'bfx-hf-indicators'
@@ -57,7 +58,7 @@ class Chart extends React.Component {
   componentDidMount () {
     const {
       width, height, onLoadMore, indicators, candles, candleWidth, trades,
-      config, onTimeFrameChange, orders, position, marketLabel,
+      config, onTimeFrameChange, orders, position, marketLabel, timeFrameWidth
     } = this.props
 
     document.addEventListener('fullscreenchange', this.onFullscreenExit, false)
@@ -84,6 +85,10 @@ class Chart extends React.Component {
       return
     }
 
+    const dataKey = _isFinite(timeFrameWidth)
+      ? `${marketLabel}${timeFrameWidth}`
+      : `${marketLabel}${TIME_FRAME_WIDTHS[candleWidth]}`
+
     this.chart = new ChartLib({
       ohlcCanvas,
       axisCanvas,
@@ -96,8 +101,9 @@ class Chart extends React.Component {
       onHoveredCandleCB: this.onHoveredCandle,
       onUpdateIndicatorSettingsCB: this.onUpdateIndicatorSettings,
       data: candles,
-      dataKey: `${marketLabel}${candleWidth}`,
+      dataKey,
       dataWidth: candleWidth,
+      timeFrameWidth,
       trades,
       orders,
       position,
@@ -111,18 +117,36 @@ class Chart extends React.Component {
     const { isFullscreen } = this.state
     const {
       candles, width, height, trades, indicators, drawings, candleWidth, orders,
-      position, disableToolbar, disableTopbar, marketLabel
+      position, disableToolbar, disableTopbar, marketLabel, onLoadMore,
+      disableTimeFrames, timeFrameWidth
     } = this.props
 
-    if (candles !== prevProps.candles || candleWidth !== prevProps.candleWidth) {
-      this.chart.updateData(candles, candleWidth, `${marketLabel}${candleWidth}`)
+    if (onLoadMore !== prevProps.onLoadMore) {
+      this.chart.onLoadMoreCB = onLoadMore
+    }
+
+    if (
+      candles !== prevProps.candles ||
+      candleWidth !== prevProps.candleWidth ||
+      timeFrameWidth !== prevProps.timeFrameWidth
+    ) {
+      const width = _isFinite(timeFrameWidth)
+        ? timeFrameWidth
+        : TIME_FRAME_WIDTHS[candleWidth]
+
+      this.chart.updateData(candles, width, `${marketLabel}${width}`)
+    }
+
+    if (timeFrameWidth !== prevProps.timeFrameWidth) {
+      this.chart.dataWidth = timeFrameWidth
     }
 
     if (
       (width !== prevProps.width) ||
       (height !== prevProps.height) ||
       (disableToolbar !== prevProps.disableToolbar) ||
-      (disableTopbar !== prevProps.disableTopbar)
+      (disableTopbar !== prevProps.disableTopbar) ||
+      (disableTimeFrames !== prevProps.disableTimeFrames)
     ) {
       if (isFullscreen) {
         this.chart.updateDimensions(window.innerWidth, this.getChartHeight())
@@ -157,6 +181,9 @@ class Chart extends React.Component {
     document.removeEventListener('mozfullscreenchange', this.onFullscreenExit)
     document.removeEventListener('MSFullscreenChange', this.onFullscreenExit)
     document.removeEventListener('webkitfullscreenchange', this.onFullscreenExit)
+
+    this.chart.removeMouseEventListeners()
+    this.chart = null
   }
 
   onHoveredCandle (hoveredCandle) {
@@ -333,7 +360,7 @@ class Chart extends React.Component {
       marketLabel, bgColor = '#000', candleWidth, candles, onTimeFrameChange,
       onAddDrawing, isSyncing, disableToolbar, disableTopbar, onDeleteIndicator,
       disableIndicators, candleLoadingThreshold = 0, extraHeaderComponentsLeft,
-      extraHeaderComponentsRight, showMarketLabel,
+      extraHeaderComponentsRight, showMarketLabel, disableTimeFrames
     } = this.props
 
     const height = isFullscreen ? window.innerHeight : this.props.height
@@ -374,25 +401,27 @@ class Chart extends React.Component {
               </p>
             )}
 
-            <div className='bfxcs__topbar-tfs bfxcs__topbar-section'>
-              <Dropdown
-                label={(
-                  <span>
-                    {candleWidth}
-                    <i className='icon-chevron-down-passive' />
-                  </span>
-                )}
-              >
-                <ul>
-                  {Object.keys(TIME_FRAME_WIDTHS).map(tf => (
-                    <li
-                      key={tf}
-                      onClick={() => onTimeFrameChange && onTimeFrameChange(tf)}
-                    >{tf}</li>
-                  ))}
-                </ul>
-              </Dropdown>
-            </div>
+            {!disableTimeFrames && (
+              <div className='bfxcs__topbar-tfs bfxcs__topbar-section'>
+                <Dropdown
+                  label={(
+                    <span>
+                      {candleWidth}
+                      <i className='icon-chevron-down-passive' />
+                    </span>
+                  )}
+                >
+                  <ul>
+                    {Object.keys(TIME_FRAME_WIDTHS).map(tf => (
+                      <li
+                        key={tf}
+                        onClick={() => onTimeFrameChange && onTimeFrameChange(tf)}
+                      >{tf}</li>
+                    ))}
+                  </ul>
+                </Dropdown>
+              </div>
+            )}
 
             {!disableIndicators && (
               <div className='bfxc__topbar-indicators bfxcs__topbar-section'>

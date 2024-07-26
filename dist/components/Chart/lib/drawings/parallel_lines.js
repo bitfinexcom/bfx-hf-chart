@@ -3,17 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
 var _line = require("../draw/line");
-
 var _line2 = _interopRequireDefault(_line);
-
 var _drawing = require("./drawing");
-
 var _drawing2 = _interopRequireDefault(_drawing);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 class ParallelLineDrawing extends _drawing2.default {
   constructor(chart) {
     super(chart, [{
@@ -30,11 +24,9 @@ class ParallelLineDrawing extends _drawing2.default {
     this.end = null;
     this.parallel = null;
   }
-
   onMouseDown(x, y) {
     const mts = this.chart.getMTSForRawX(x);
     const price = this.chart.getPriceForRawY(y);
-
     if (this.active) {
       if (this.end && this.start) {
         this.parallel = {
@@ -54,15 +46,12 @@ class ParallelLineDrawing extends _drawing2.default {
         };
       }
     }
-
     return super.onMouseDown(x, y);
   }
-
   render() {
     if (!this.start) {
       return;
     }
-
     const linePoints = [];
     const transformer = this.chart.getOHLCTransformer();
     const start = transformer.point(this.start);
@@ -78,7 +67,6 @@ class ParallelLineDrawing extends _drawing2.default {
       y: m * this.chart.vp.size.w + b
     });
     (0, _line2.default)(this.chart.drawingCanvas, '#fff', linePoints);
-
     if (this.start && this.end) {
       const pLinePoints = [];
       const parallel = this.parallel ? transformer.point(this.parallel) : transformer.point(this.chart.getOHLCMousePosition());
@@ -93,10 +81,7 @@ class ParallelLineDrawing extends _drawing2.default {
       });
       (0, _line2.default)(this.chart.drawingCanvas, '#fff', pLinePoints);
     }
-
     this.renderAnchors();
   }
-
 }
-
 exports.default = ParallelLineDrawing;

@@ -3,13 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
 var _drawing = require("./drawing");
-
 var _drawing2 = _interopRequireDefault(_drawing);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 class HorizontalLineDrawing extends _drawing2.default {
   constructor(chart) {
     super(chart, [{
@@ -18,21 +14,17 @@ class HorizontalLineDrawing extends _drawing2.default {
     }]);
     this.price = null;
   }
-
   onMouseDown(x, y) {
     if (this.active) {
       this.price = this.chart.getPriceForRawY(y);
       this.active = false;
     }
-
     return super.onMouseDown(x, y);
   }
-
   render() {
     if (!this.price) {
       return;
     }
-
     const ctx = this.chart.drawingCanvas.getContext('2d');
     const transformer = this.chart.getOHLCTransformer();
     const y = transformer.y(this.price);
@@ -43,7 +35,5 @@ class HorizontalLineDrawing extends _drawing2.default {
     ctx.stroke();
     this.renderAnchors();
   }
-
 }
-
 exports.default = HorizontalLineDrawing;

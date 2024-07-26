@@ -3,77 +3,49 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
+var _isFinite2 = require("lodash/isFinite");
+var _isFinite3 = _interopRequireDefault(_isFinite2);
 var _react = require("react");
-
 var _react2 = _interopRequireDefault(_react);
-
 var _bfxHfUtil = require("bfx-hf-util");
-
 var _bfxHfIndicators = require("bfx-hf-indicators");
-
 var _bfxHfIndicators2 = _interopRequireDefault(_bfxHfIndicators);
-
 var _randomcolor = require("randomcolor");
-
 var _randomcolor2 = _interopRequireDefault(_randomcolor);
-
 var _Dropdown = require("../Dropdown");
-
 var _Dropdown2 = _interopRequireDefault(_Dropdown);
-
 var _chart = require("./lib/chart");
-
 var _chart2 = _interopRequireDefault(_chart);
-
 var _line = require("./lib/drawings/line");
-
 var _line2 = _interopRequireDefault(_line);
-
 var _horizontal_line = require("./lib/drawings/horizontal_line");
-
 var _horizontal_line2 = _interopRequireDefault(_horizontal_line);
-
 var _vertical_line = require("./lib/drawings/vertical_line");
-
 var _vertical_line2 = _interopRequireDefault(_vertical_line);
-
 var _parallel_lines = require("./lib/drawings/parallel_lines");
-
 var _parallel_lines2 = _interopRequireDefault(_parallel_lines);
-
 var _serialize_indicators = require("./lib/util/serialize_indicators");
-
 var _serialize_indicators2 = _interopRequireDefault(_serialize_indicators);
-
 var _unserialize_indicators = require("./lib/util/unserialize_indicators");
-
 var _unserialize_indicators2 = _interopRequireDefault(_unserialize_indicators);
-
 var _LoadingBeeSpinner = require("../LoadingBeeSpinner");
-
 var _LoadingBeeSpinner2 = _interopRequireDefault(_LoadingBeeSpinner);
-
 var _IndicatorSettingsModal = require("../IndicatorSettingsModal");
-
 var _IndicatorSettingsModal2 = _interopRequireDefault(_IndicatorSettingsModal);
-
 require("./Chart.css");
-
 require("./icon_font/styles.css");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 const TOPBAR_HEIGHT = 45;
-const TOOLBAR_HEIGHT = 45; // Library methods are made available on the class before export
-// (to maintain CRA index.js)
+const TOOLBAR_HEIGHT = 45;
 
+// Library methods are made available on the class before export
+// (to maintain CRA index.js)
 class Chart extends _react2.default.Component {
   constructor(props) {
     super(props);
-
     _defineProperty(this, "state", {
       hoveredCandle: null,
       indicatorSettings: [],
@@ -81,7 +53,6 @@ class Chart extends _react2.default.Component {
       settingsModalIndicatorIndex: -1,
       isFullscreen: false
     });
-
     this.onHoveredCandle = this.onHoveredCandle.bind(this);
     this.onCloseIndicatorSettings = this.onCloseIndicatorSettings.bind(this);
     this.onOpenIndicatorSettings = this.onOpenIndicatorSettings.bind(this);
@@ -97,7 +68,6 @@ class Chart extends _react2.default.Component {
     this.crosshairCanvasRef = _react2.default.createRef();
     this.chart = null;
   }
-
   componentDidMount() {
     const {
       width,
@@ -111,7 +81,8 @@ class Chart extends _react2.default.Component {
       onTimeFrameChange,
       orders,
       position,
-      marketLabel
+      marketLabel,
+      timeFrameWidth
     } = this.props;
     document.addEventListener('fullscreenchange', this.onFullscreenExit, false);
     document.addEventListener('mozfullscreenchange', this.onFullscreenExit, false);
@@ -122,17 +93,15 @@ class Chart extends _react2.default.Component {
     const drawingCanvas = this.drawingCanvasRef.current;
     const indicatorCanvas = this.indicatorCanvasRef.current;
     const crosshairCanvas = this.crosshairCanvasRef.current;
-
     if (!ohlcCanvas || !axisCanvas || !drawingCanvas || !indicatorCanvas || !crosshairCanvas) {
       console.error('mounted without all canvases!');
       return;
     }
-
     if (this.chart) {
       console.error('chart library initialized before mount!');
       return;
     }
-
+    const dataKey = (0, _isFinite3.default)(timeFrameWidth) ? `${marketLabel}${timeFrameWidth}` : `${marketLabel}${_bfxHfUtil.TIME_FRAME_WIDTHS[candleWidth]}`;
     this.chart = new _chart2.default({
       ohlcCanvas,
       axisCanvas,
@@ -145,8 +114,9 @@ class Chart extends _react2.default.Component {
       onHoveredCandleCB: this.onHoveredCandle,
       onUpdateIndicatorSettingsCB: this.onUpdateIndicatorSettings,
       data: candles,
-      dataKey: `${marketLabel}${candleWidth}`,
+      dataKey,
       dataWidth: candleWidth,
+      timeFrameWidth,
       trades,
       orders,
       position,
@@ -155,7 +125,6 @@ class Chart extends _react2.default.Component {
       config
     });
   }
-
   componentDidUpdate(prevProps) {
     const {
       isFullscreen
@@ -172,61 +141,63 @@ class Chart extends _react2.default.Component {
       position,
       disableToolbar,
       disableTopbar,
-      marketLabel
+      marketLabel,
+      onLoadMore,
+      disableTimeFrames,
+      timeFrameWidth
     } = this.props;
-
-    if (candles !== prevProps.candles || candleWidth !== prevProps.candleWidth) {
-      this.chart.updateData(candles, candleWidth, `${marketLabel}${candleWidth}`);
+    if (onLoadMore !== prevProps.onLoadMore) {
+      this.chart.onLoadMoreCB = onLoadMore;
     }
-
-    if (width !== prevProps.width || height !== prevProps.height || disableToolbar !== prevProps.disableToolbar || disableTopbar !== prevProps.disableTopbar) {
+    if (candles !== prevProps.candles || candleWidth !== prevProps.candleWidth || timeFrameWidth !== prevProps.timeFrameWidth) {
+      const width = (0, _isFinite3.default)(timeFrameWidth) ? timeFrameWidth : _bfxHfUtil.TIME_FRAME_WIDTHS[candleWidth];
+      this.chart.updateData(candles, width, `${marketLabel}${width}`);
+    }
+    if (timeFrameWidth !== prevProps.timeFrameWidth) {
+      this.chart.dataWidth = timeFrameWidth;
+    }
+    if (width !== prevProps.width || height !== prevProps.height || disableToolbar !== prevProps.disableToolbar || disableTopbar !== prevProps.disableTopbar || disableTimeFrames !== prevProps.disableTimeFrames) {
       if (isFullscreen) {
         this.chart.updateDimensions(window.innerWidth, this.getChartHeight());
       } else {
         this.chart.updateDimensions(width, this.getChartHeight());
       }
     }
-
     if (trades !== prevProps.trades) {
       this.chart.updateTrades(trades);
     }
-
     if (indicators !== prevProps.indicators) {
       this.chart.updateIndicators(indicators);
     }
-
     if (drawings !== prevProps.drawings) {
       this.chart.updateDrawings(drawings);
     }
-
     if (orders !== prevProps.orders) {
       this.chart.updateOrders(orders);
     }
-
     if (position !== prevProps.position) {
       this.chart.updatePosition(position);
     }
   }
-
   componentWillUnmount() {
     document.removeEventListener('fullscreenchange', this.onFullscreenExit);
     document.removeEventListener('mozfullscreenchange', this.onFullscreenExit);
     document.removeEventListener('MSFullscreenChange', this.onFullscreenExit);
     document.removeEventListener('webkitfullscreenchange', this.onFullscreenExit);
+    this.chart.removeMouseEventListeners();
+    this.chart = null;
   }
-
   onHoveredCandle(hoveredCandle) {
     this.setState(() => ({
       hoveredCandle
     }));
   }
+
   /**
    * @param {Array[]} indicators - array of [iClass, args]
    * @param {number} ohlcVPHeight - height of OHLC viewport
    * @param {number} slotHeight - external indicator slot height
    */
-
-
   onUpdateIndicatorSettings(indicators, slotHeight) {
     const extCount = indicators.filter(([Class]) => Class.ui.position === 'external').length;
     let currentExtSlot = 0;
@@ -251,21 +222,18 @@ class Chart extends _react2.default.Component {
       indicatorSettings
     }));
   }
-
   onOpenIndicatorSettings(index) {
     this.setState(() => ({
       settingsModalOpen: true,
       settingsModalIndicatorIndex: index
     }));
   }
-
   onCloseIndicatorSettings() {
     this.setState(() => ({
       settingsModalOpen: false,
       settingsModalIndicatorIndex: -1
     }));
   }
-
   onSaveIndicatorSettings(args) {
     const {
       onUpdateIndicatorArgs
@@ -276,7 +244,6 @@ class Chart extends _react2.default.Component {
     onUpdateIndicatorArgs(args, settingsModalIndicatorIndex);
     this.onCloseIndicatorSettings();
   }
-
   onToggleFullscreen() {
     if (!document.fullscreenElement && !document.mozFullscreenElement && !document.msFullscreenElement && !document.webkitFullscreenElement) {
       if (this.wrapperRef.current) {
@@ -294,12 +261,10 @@ class Chart extends _react2.default.Component {
       }
     }
   }
-
   onFullscreenExit() {
     if (document.fullscreenElement || document.mozFullscreenElement || document.msFullscreenElement || document.webkitFullscreenElement) {
       return;
     }
-
     const {
       width
     } = this.props;
@@ -308,16 +273,13 @@ class Chart extends _react2.default.Component {
     }));
     this.chart.updateDimensions(width, this.getChartHeight());
   }
-
   onAddIndicator(i) {
     const {
       onAddIndicator
     } = this.props;
-
     if (!onAddIndicator) {
       return;
     }
-
     const {
       ui
     } = i;
@@ -326,7 +288,6 @@ class Chart extends _react2.default.Component {
     } = ui;
     const args = i.args.map(a => a.default);
     const colors = [];
-
     switch (type) {
       case 'rsi':
       case 'line':
@@ -334,13 +295,11 @@ class Chart extends _react2.default.Component {
           colors.push((0, _randomcolor2.default)());
           break;
         }
-
       case 'lines':
         {
           ui.lines.forEach(() => colors.push((0, _randomcolor2.default)()));
           break;
         }
-
       case 'bbands':
         {
           colors.push((0, _randomcolor2.default)());
@@ -348,7 +307,6 @@ class Chart extends _react2.default.Component {
           colors.push((0, _randomcolor2.default)());
           break;
         }
-
       case 'macd':
         {
           colors.push((0, _randomcolor2.default)());
@@ -356,34 +314,27 @@ class Chart extends _react2.default.Component {
           colors.push((0, _randomcolor2.default)());
           break;
         }
-
       default:
         {
           throw new Error(`unknown indicator type: ${type}`);
         }
     }
-
     onAddIndicator([i, args, colors]);
   }
-
   getTopReservedSpace() {
     const {
       disableTopbar,
       disableToolbar
     } = this.props;
     let space = 0;
-
     if (!disableToolbar) {
       space += TOOLBAR_HEIGHT;
     }
-
     if (!disableTopbar) {
       space += TOPBAR_HEIGHT;
     }
-
     return space;
   }
-
   getChartHeight() {
     const {
       isFullscreen
@@ -391,7 +342,6 @@ class Chart extends _react2.default.Component {
     const height = isFullscreen ? window.innerHeight : this.props.height;
     return height - this.getTopReservedSpace();
   }
-
   render() {
     const {
       indicatorSettings,
@@ -414,7 +364,8 @@ class Chart extends _react2.default.Component {
       candleLoadingThreshold = 0,
       extraHeaderComponentsLeft,
       extraHeaderComponentsRight,
-      showMarketLabel
+      showMarketLabel,
+      disableTimeFrames
     } = this.props;
     const height = isFullscreen ? window.innerHeight : this.props.height;
     const width = isFullscreen ? window.innerWidth : this.props.width;
@@ -442,7 +393,7 @@ class Chart extends _react2.default.Component {
       className: "bfxc__topbar"
     }, extraHeaderComponentsLeft, showMarketLabel && /*#__PURE__*/_react2.default.createElement("p", {
       className: "bfxcs__topbar-market"
-    }, marketLabel), /*#__PURE__*/_react2.default.createElement("div", {
+    }, marketLabel), !disableTimeFrames && /*#__PURE__*/_react2.default.createElement("div", {
       className: "bfxcs__topbar-tfs bfxcs__topbar-section"
     }, /*#__PURE__*/_react2.default.createElement(_Dropdown2.default, {
       label: /*#__PURE__*/_react2.default.createElement("span", null, candleWidth, /*#__PURE__*/_react2.default.createElement("i", {
@@ -531,9 +482,7 @@ class Chart extends _react2.default.Component {
       top: this.getTopReservedSpace()
     }));
   }
-
 }
-
 Chart.serializeIndicators = _serialize_indicators2.default;
 Chart.unserializeIndicators = _unserialize_indicators2.default;
 exports.default = Chart;

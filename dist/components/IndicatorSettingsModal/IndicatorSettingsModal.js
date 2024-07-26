@@ -3,33 +3,23 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
 var _react = require("react");
-
 var _react2 = _interopRequireDefault(_react);
-
 var _isFinite2 = require("lodash/isFinite");
-
 var _isFinite3 = _interopRequireDefault(_isFinite2);
-
 var _isString2 = require("lodash/isString");
-
 var _isString3 = _interopRequireDefault(_isString2);
-
 require("./IndicatorSettingsModal.css");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class IndicatorSettingsModal extends _react2.default.PureComponent {
   constructor(props) {
     super(props);
-
     _defineProperty(this, "state", {
       values: []
     });
-
     const {
       settings = {}
     } = this.props;
@@ -41,7 +31,6 @@ class IndicatorSettingsModal extends _react2.default.PureComponent {
     this.onValueChange = this.onValueChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
-
   onValueChange(index, value) {
     this.setState(({
       values
@@ -53,7 +42,6 @@ class IndicatorSettingsModal extends _react2.default.PureComponent {
       };
     });
   }
-
   onSave() {
     const {
       onSave
@@ -63,7 +51,6 @@ class IndicatorSettingsModal extends _react2.default.PureComponent {
     } = this.state;
     onSave(values);
   }
-
   render() {
     const {
       values
@@ -104,7 +91,5 @@ class IndicatorSettingsModal extends _react2.default.PureComponent {
       className: "green"
     }, "Save")))));
   }
-
 }
-
 exports.default = IndicatorSettingsModal;

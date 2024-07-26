@@ -34,10 +34,8 @@ const CONFIG = {
   ZOOM_CANDLE_STEP: 5,
   ZOOM_MIN_LIMIT_CANDLES: 20
 };
-
 const set = (key, value) => {
   CONFIG[key] = value;
 };
-
 exports.default = CONFIG;
 exports.set = set;

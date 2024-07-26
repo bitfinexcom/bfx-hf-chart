@@ -3,25 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
 var _last2 = require("lodash/last");
-
 var _last3 = _interopRequireDefault(_last2);
-
 var _max2 = require("lodash/max");
-
 var _max3 = _interopRequireDefault(_max2);
-
 var _min2 = require("lodash/min");
-
 var _min3 = _interopRequireDefault(_min2);
-
 var _config = require("../config");
-
 var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /**
  * Renders a series of candles on the target 2D context, using the specified
  * viewport dimensions (scaled appropriately)
@@ -39,7 +29,6 @@ exports.default = (ctx, candles, candleWidth, targetWidth, targetHeight, vpWidth
   const maxP = (0, _max3.default)(candles.map(ohlc => ohlc[3]));
   const minP = (0, _min3.default)(candles.map(ohlc => ohlc[4]));
   const pd = maxP - minP;
-
   for (let i = 0; i < candles.length; i += 1) {
     const d = candles[i];
     const [mts, o, c, h, l, v] = d;
@@ -48,15 +37,18 @@ exports.default = (ctx, candles, candleWidth, targetWidth, targetHeight, vpWidth
     const lPX = (l - minP) / pd * targetHeight;
     const cPX = (c - minP) / pd * targetHeight;
     const x = (targetWidth - (rightMTS - mts)) / targetWidth * (vpWidth - candleWidth / 2);
-    const y = targetHeight - (0, _max3.default)([oPX, cPX]); // volume
+    const y = targetHeight - (0, _max3.default)([oPX, cPX]);
 
+    // volume
     ctx.fillStyle = c >= o ? _config2.default.RISING_VOL_FILL : _config2.default.FALLING_VOL_FILL;
     ctx.fillRect(x - candleWidth / 2, targetHeight, candleWidth, -(v / maxVol * targetHeight));
     ctx.fillStyle = c >= o ? _config2.default.RISING_CANDLE_FILL : _config2.default.FALLING_CANDLE_FILL;
-    ctx.strokeStyle = ctx.fillStyle; // body
+    ctx.strokeStyle = ctx.fillStyle;
 
-    ctx[c >= o ? 'strokeRect' : 'fillRect'](x - candleWidth / 2, y, candleWidth, (0, _max3.default)([oPX, cPX]) - (0, _min3.default)([oPX, cPX])); // wicks
+    // body
+    ctx[c >= o ? 'strokeRect' : 'fillRect'](x - candleWidth / 2, y, candleWidth, (0, _max3.default)([oPX, cPX]) - (0, _min3.default)([oPX, cPX]));
 
+    // wicks
     ctx.beginPath();
     ctx.moveTo(x, targetHeight - (0, _max3.default)([oPX, cPX]));
     ctx.lineTo(x, targetHeight - hPX);
